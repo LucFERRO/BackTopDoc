@@ -1,4 +1,4 @@
-const companies = [
+export const companies = [
     {
         user_id: 5,
         name: 'Remy & Co2',
@@ -21,5 +21,3 @@ const companies = [
         availabilities: ['Noël']
     }
 ];
-
-module.exports = companies;

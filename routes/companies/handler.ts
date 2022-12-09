@@ -48,7 +48,7 @@ const createCompany = async (req: Request, res: Response) => {
 
     const { name, siret, password, mail, city, zip_code, address, avatar, description, availabilities, degrees, phone_number, is_active, is_pending } = req.body;
 
-    if (!siretValidate.isSIRET(siret)) return res.status(400).json({message: 'SIRET invalide'})
+    if (!siretValidate.isSIRET(siret)) return res.status(400).json({ message: 'SIRET invalide' })
 
     let role = 'entreprise'
 
@@ -83,7 +83,7 @@ const updateCompany = async (req: Request, res: Response) => {
 
     const { name, siret, mail, city, zip_code, address, avatar, description, availabilities, phone_number, is_active, is_pending, role } = req.body;
 
-    if (!siretValidate.isSIRET(siret)) return res.status(400).json({message: 'SIRET invalide'})
+    if (!siretValidate.isSIRET(siret)) return res.status(400).json({ message: 'SIRET invalide' })
 
     let companyInfo = { name, siret, availabilities };
     let userInfo = { mail, city, zip_code, address, avatar, phone_number, is_active, is_pending, role };

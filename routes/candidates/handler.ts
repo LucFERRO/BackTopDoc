@@ -66,7 +66,7 @@ const createCandidate = async (req: Request, res: Response) => {
             const newCandidate = await Candidate.create(candidateInfo, { transaction: t })
             return res.status(200).json(newCandidate)
         })
-    } catch (error : any) {
+    } catch (error: any) {
         let message = 'ERROR 500'
         if (error.errors[0].path == 'mail') message = 'Email invalide'
         if (error.errors[0].path == 'phone_number') message = 'Numéro de téléphone invalide'
@@ -113,7 +113,7 @@ const updateCandidate = async (req: Request, res: Response) => {
             return res.status(200).json(updatedCandidate[1]);
 
         });
-    } catch (error : any) {
+    } catch (error: any) {
         let message = 'ERROR 500'
         if (error.errors[0].path == 'mail') message = 'Email invalide'
         if (error.errors[0].path == 'phone_number') message = 'Numéro de téléphone invalide'

@@ -1,4 +1,4 @@
-const candidates = [
+export const candidates = [
     {
         user_id: 1,
         lastname: 'FERRO',
@@ -13,7 +13,7 @@ const candidates = [
         firstname: 'Luc',
         birthdate: '2000-10-25T15:15:15.000Z',
         availabilities: ['Noël']
-    }, 
+    },
     {
         user_id: 4,
         lastname: 'JeanJideon',
@@ -85,5 +85,3 @@ const candidates = [
         availabilities: ['Noël']
     }
 ];
-
-module.exports = candidates;

@@ -25,12 +25,12 @@ const login = async (req: Request, res: Response) => {
         return res.status(401).json({ successfullLogin: false, message: message });
     } else {
         const accessToken = jwt.sign(
-            { id: user.user_id, name: user.mail, role: user.role },
+            { id: user.user_id, name: user.mail },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: "3600s" }
         );
         const refreshToken = jwt.sign(
-            { id: user.user_id, name: user.mail, role: user.role },
+            { id: user.user_id, name: user.mail },
             process.env.REFRESH_TOKEN_SECRET
         );
 
@@ -40,10 +40,10 @@ const login = async (req: Request, res: Response) => {
 
         Token.create({
             user_id: user.user_id,
-            refreshToken: refreshToken
+            token: token
         })
 
-        return res.status(200).json(DTO_login({ accessToken: accessToken, refreshToken: refreshToken, user: user }))
+        return res.status(200).json(DTO_login({ accessToken: accessToken, token: token, user: user }))
     }
 };
 
@@ -57,7 +57,7 @@ const refreshToken = async (req: Request, res: Response) => {
     let refreshTokens: any = []
 
     tokens.map((token: tokenTypes) => {
-        refreshTokens.push(token.refreshToken)
+        refreshTokens.push(token.token)
     })
 
     if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
@@ -65,7 +65,7 @@ const refreshToken = async (req: Request, res: Response) => {
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err: Error, user: userTypes) => {
         if (err) return res.sendStatus(403)
         const accessToken = jwt.sign(
-            { id: user.user_id, name: user.mail, role: user.role },
+            { id: user.user_id, name: user.mail },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: "3600s" })
         res.json({ accessToken: accessToken })

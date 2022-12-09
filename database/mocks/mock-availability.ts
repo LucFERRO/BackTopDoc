@@ -1,4 +1,4 @@
-const availabilities = [
+export const availabilities = [
     {
         availability: 'February',
     },
@@ -40,5 +40,3 @@ const availabilities = [
     },
 
 ];
-
-module.exports = availabilities;

@@ -1,4 +1,4 @@
-const admins = [
+export const admins = [
     {
         user_id: 2,
         lastname: 'admin',
@@ -10,5 +10,3 @@ const admins = [
         firstname: 'admin2'
     }
 ];
-
-module.exports = admins;
