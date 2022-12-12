@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize"
 
-module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
+export const VacationModel = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
 
     const concatRequiredMessage = (data: string) => {
         return `${data} is required`
@@ -28,5 +28,11 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
                 notEmpty: { msg: concatRequiredMessage('Vacation end') }
             }
         }
-    })
+    },
+        {
+            freezeTableName: true,
+            tableName: "vacations",
+            underscored: true
+        }
+    )
 }

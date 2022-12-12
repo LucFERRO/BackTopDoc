@@ -1,51 +1,50 @@
 import { DataTypes } from "sequelize"
-const { Sequelize } = require('sequelize')
 
 import { personTypes } from "../type/person"
 import { persons } from "../database/mocks/mock-person"
-const PersonModel = require('../models/person')
+import { PersonModel } from "../model/person"
 
 import { tokenTypes } from "../type/token"
 import { tokens } from "../database/mocks/mock-token"
-const TokenModel = require('../models/token')
+import { TokenModel } from "../model/token"
 
 import { banTypes } from "../type/ban"
 import { bans } from "../database/mocks/mock-ban"
-const BanModel = require('../models/ban')
+import { BanModel } from "../model/ban"
 
 import { addressTypes } from "../type/address"
 import { addresses } from "../database/mocks/mock-address"
-const AddressModel = require('../models/address')
+import { AddressModel } from "../model/address"
 
 import { doctorTypes } from "../type/doctor"
 import { doctors } from "../database/mocks/mock-doctor"
-const DoctorModel = require('../models/doctor')
+import { DoctorModel } from "../model/doctor"
 
 import { patientTypes } from "../type/patient"
 import { patients } from "../database/mocks/mock-patient"
-const PatientModel = require('../models/patient')
+import { PatientModel } from "../model/patient"
 
 import { backgroundTypes } from "../type/background"
 import { backgrounds } from "../database/mocks/mock-background"
-const BackgroundModel = require('../models/background')
+import { BackgroundModel } from "../model/background"
 
 import { planningTypes } from "../type/planning"
 import { plannings } from "../database/mocks/mock-planning"
-const PlanningModel = require('../models/planning')
+import { PlanningModel } from "../model/planning"
 
 import { vacationTypes } from "../type/vacation"
 import { vacations } from "../database/mocks/mock-vacation"
-const VacationModel = require('../models/vacation')
+import { VacationModel } from "../model/vacation"
 
 import { appointementTypes } from "../type/appointement"
 import { appointements } from "../database/mocks/mock-appointement"
-const AppointementModel = require('../models/appointement')
+import { AppointementModel } from "../model/appointement"
 
 import { workdayTypes } from "../type/workday"
 import { workdays } from "../database/mocks/mock-workday"
-const WorkdayModel = require('../models/workday')
+import { WorkdayModel } from "../model/workday"
 
-import sequelize from './sequelize'
+import { sequelize } from './sequelize'
 import { pathToFileURL } from "url"
 
 sequelize.authenticate()
@@ -53,17 +52,17 @@ sequelize.authenticate()
     .catch((error: Error) => console.error(`Could not connect to database: ${error}`)
     )
 
-const Person = PersonModel(sequelize, DataTypes)
-const Token = TokenModel(sequelize, DataTypes)
-const Ban = BanModel(sequelize, DataTypes)
-const Address = AddressModel(sequelize, DataTypes)
-const Doctor = DoctorModel(sequelize, DataTypes)
-const Patient = PatientModel(sequelize, DataTypes)
-const Background = BackgroundModel(sequelize, DataTypes)
-const Appointement = AppointementModel(sequelize, DataTypes)
-const Vacation = VacationModel(sequelize, DataTypes)
-const Planning = PlanningModel(sequelize, DataTypes)
-const Workday = WorkdayModel(sequelize, DataTypes)
+export const Person = PersonModel(sequelize, DataTypes)
+export const Token = TokenModel(sequelize, DataTypes)
+export const Ban = BanModel(sequelize, DataTypes)
+export const Address = AddressModel(sequelize, DataTypes)
+export const Doctor = DoctorModel(sequelize, DataTypes)
+export const Patient = PatientModel(sequelize, DataTypes)
+export const Background = BackgroundModel(sequelize, DataTypes)
+export const Appointement = AppointementModel(sequelize, DataTypes)
+export const Vacation = VacationModel(sequelize, DataTypes)
+export const Planning = PlanningModel(sequelize, DataTypes)
+export const Workday = WorkdayModel(sequelize, DataTypes)
 
 Person.hasOne(Doctor, { foreignKey: 'doctor_id' })
 Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
@@ -77,7 +76,7 @@ Appointement.belongsTo(Doctor, { foreignKey: 'doctor_id' })
 Patient.hasMany(Appointement, { foreignKey: 'patient_id' })
 Appointement.belongsTo(Patient, { foreignKey: 'patient_id' })
 
-const initDb = () => {
+export const initDb = () => {
 
     return sequelize.sync({ force: true }).then(() => {
 
@@ -149,8 +148,8 @@ const initDb = () => {
         // bans.map((ban: banTypes) => {
         //     Ban.create({
         //         ban_id: ban.ban_id,
-        //         ban_reason: ban.ban_reason,
-        //         ban_date: ban.ban_date
+        //         ban_date: ban.ban_date,
+        //         ban_reason: ban.ban_reason
         //     }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         // })
         // addresses.map((address: addressTypes) => {
@@ -202,19 +201,4 @@ const initDb = () => {
         // })
         console.log('Database successfully initialized.')
     })
-}
-
-module.exports = {
-    initDb,
-    Person,
-    Address,
-    Token,
-    Ban,
-    Doctor,
-    Patient,
-    Background,
-    Appointement,
-    Vacation,
-    Planning,
-    Workday,
 }

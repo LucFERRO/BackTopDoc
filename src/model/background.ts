@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize"
 
-module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
+export const BackgroundModel = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
 
     const concatRequiredMessage = (data: string) => {
         return `${data} is required`
@@ -13,5 +13,10 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
             primaryKey: true,
         },
     },
+        {
+            freezeTableName: true,
+            tableName: "backgrounds",
+            underscored: true
+        }
     )
 }

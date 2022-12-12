@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize"
 
-module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
+export const WorkdayModel = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
 
     const concatRequiredMessage = (data: string) => {
         return `${data} is required`
@@ -44,5 +44,11 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
                 notEmpty: { msg: concatRequiredMessage('Slot duration') }
             }
         },
-    })
+    },
+        {
+            freezeTableName: true,
+            tableName: "workdays",
+            underscored: true
+        }
+    )
 }

@@ -19,9 +19,9 @@ app.use(express.json())
 app.disable('x-powered-by')
 app.use('/api', router)
 
-import { personRouter } from './src/modules/persons/router'
+import { personRouter } from './src/module/persons/router'
 
-import { authentificationRouter } from './src/modules/authentification/router'
+import { authentificationRouter } from './src/module/authentification/router'
 import { authenticateToken } from './src/middleware/authenticate'
 import { authorization } from './src/middleware/authorizations'
 

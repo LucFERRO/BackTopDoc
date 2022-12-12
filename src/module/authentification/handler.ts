@@ -2,7 +2,6 @@ import { Request, RequestHandler, Response } from "express";
 import { ApiException } from "../../type/exception";
 import { personTypes } from "../../type/person";
 import { tokenTypes } from "../../type/token";
-import sequelize from "../../database/sequelize";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 

@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize } from "sequelize"
 
-module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
+export const PatientModel = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
 
     // const concatRequiredMessage = (data: string) => {
     //     return `${data} is required`
@@ -12,5 +12,10 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
             primaryKey: true,
         }
     },
+        {
+            freezeTableName: true,
+            tableName: "patients",
+            underscored: true
+        }
     )
 }

@@ -1,7 +1,6 @@
-
 import { DataTypes, Sequelize } from "sequelize"
 
-module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
+export const PersonModel = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
 
     const concatRequiredMessage = (data: string) => {
         return `${data} is required.`
@@ -77,7 +76,7 @@ module.exports = (sequelize: Sequelize, dataTypes: typeof DataTypes) => {
     },
         {
             freezeTableName: true,
-            tableName: "Persons",
+            tableName: "persons",
             underscored: true
         }
     )
