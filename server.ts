@@ -8,23 +8,22 @@ const router = express.Router()
 
 app.use(cors())
 
-import { ApiException } from './types/exception'
+import { ApiException } from './src/type/exception'
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
-const sequelize = require('./database/connect')
+const sequelize = require('./src/database/connect')
 
 import { Response, Request } from 'express'
 
 app.use(express.json())
+app.disable('x-powered-by')
 app.use('/api', router)
 
-import { candidateRouter } from './routes/candidates/router'
-import { userRouter } from './routes/users/router'
-import { companyRouter } from './routes/companies/router'
-import { adminRouter } from './routes/admins/router'
-import { authentificationRouter } from './routes/authentification/router'
-import { authenticateToken } from './middleware/authenticate'
-import { authorization } from './middleware/authorizations'
+import { personRouter } from './src/modules/persons/router'
+
+import { authentificationRouter } from './src/modules/authentification/router'
+import { authenticateToken } from './src/middleware/authenticate'
+import { authorization } from './src/middleware/authorizations'
 
 // To reset database, comment otherwise.
 sequelize.initDb()
@@ -65,34 +64,15 @@ const swaggerOptions = {
             }
         ],
     },
-    apis: [`./routes/*/router.ts`]
+    apis: [`./src/modules/*/router.ts`]
 }
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-router.use('/users', userRouter)
-router.use('/candidates', candidateRouter)
-router.use('/companies', companyRouter)
-router.use('/admins', 
-// authenticateToken, authorization, 
-adminRouter)
+router.use('/persons', personRouter)
+
 router.use('/auth', authentificationRouter)
-
-
-import { tokenTypes } from "./types/token"
-const { Token } = require("./database/connect")
-app.get('/api/tokens', (req: any, res: any) => {
-    Token.findAll()
-        .then((tokens: tokenTypes) => {
-            res.status(200).json(tokens)
-        })
-        .catch((error: ApiException) => {
-            res.status(500).json(error)
-        })
-})
-
-require('./routes/availabilities/findAllAvailabilities')(app)
 
 // require('./routes/auth/login')(app)
 // require('./routes/auth/test')(app)
