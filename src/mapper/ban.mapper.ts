@@ -1,11 +1,8 @@
 import { BanDTO } from "../dto/ban.dto"
 import { banTypes } from "../type/ban"
-import { BanModel } from "../model/ban";
-import { Ban } from "../database/connect"
 
 export class BanMapper {
-    // TODO
-    static mapToDto(ban: Ban | null): BanDTO | null {
+    static mapToDto(ban: banTypes | null): BanDTO | null {
         if (ban === null) return null;
         const dto: BanDTO = {
             ban_reason: ban.ban_reason,

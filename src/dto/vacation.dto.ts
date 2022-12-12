@@ -1,4 +1,4 @@
 export interface VacationDTO {
-    vacation_start: string,
-    vacation_end: string,
+    vacation_start: Date,
+    vacation_end: Date,
 }

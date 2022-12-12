@@ -1,11 +1,8 @@
 import { AddressDTO } from "../dto/address.dto"
 import { addressTypes } from "../type/address"
-import { AddressModel } from "../model/address";
-import { Address } from "../database/connect"
 
 export class AddressMapper {
-    // TODO
-    static mapToDto(address: Address | null): AddressDTO | null {
+    static mapToDto(address: addressTypes | null): AddressDTO | null {
         if (address === null) return null;
         const dto: AddressDTO = {
             address_number: address.address_number,
