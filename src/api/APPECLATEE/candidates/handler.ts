@@ -1,6 +1,6 @@
 import { Request, RequestHandler, Response } from "express";
-import { ApiException } from "../../type/exception";
-import { candidateTypes } from "../../type/candidate";
+import { ApiException } from "../../../type/exception";
+import { candidateTypes } from "../../../type/";
 import sequelize from "../../database/sequelize";
 const bcrypt = require("bcrypt");
 

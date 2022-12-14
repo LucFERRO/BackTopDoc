@@ -2,10 +2,6 @@ const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 const express = require("express")
 
-import { authentificationRouter } from '../APPECLATEE/authentification/router'
-import { authenticateToken } from '../middleware/authenticate'
-import { authorization } from '../middleware/authorizations'
-
 export const swaggerRouter = express.Router()
 
 const swaggerOptions = {
@@ -32,18 +28,8 @@ const swaggerOptions = {
             }
         ],
     },
-    apis: [`./APPECLATEE/*/router.ts`]
+    apis: [`./src/controller/*.controller.ts`]
 }
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 swaggerRouter.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-
-swaggerRouter.use('/auth', authentificationRouter)
-
-// require('./routes/auth/login')(app)
-// require('./routes/auth/test')(app)
-
-swaggerRouter.use(({ res: ApiException }: any) => {
-    const message = 'Ressource not found.'
-    return ApiException.status(404).json({ message })
-})

@@ -1,13 +1,13 @@
 import { Request, RequestHandler, Response } from "express";
-import { ApiException } from "../../type/exception";
-import { personTypes } from "../../type/person";
-import { tokenTypes } from "../../type/token";
+// import { ApiException } from "../../type/exception";
+// import { personTypes } from "../../type/person";
+// import { tokenTypes } from "../../type/token";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { Person, Token } = require("../../database/connect");
+const { Person, Token } = require("../../../database/connect");
 
-const { DTO_login } = require("../../dto/DTO")
+const { DTO_login } = require("../../../dto/DTO")
 
 const login = async (req: Request, res: Response) => {
     const person = await Person.findOne({ where: { mail: req.body.mail } })
@@ -55,13 +55,13 @@ const refreshToken = async (req: Request, res: Response) => {
 
     let refreshTokens: any = []
 
-    tokens.map((token: tokenTypes) => {
+    tokens.map((token: any) => {
         refreshTokens.push(token.token)
     })
 
     if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
 
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err: Error, person: personTypes) => {
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err: Error, person: any) => {
         if (err) return res.sendStatus(403)
         const accessToken = jwt.sign(
             { id: person.person_id, name: person.mail },

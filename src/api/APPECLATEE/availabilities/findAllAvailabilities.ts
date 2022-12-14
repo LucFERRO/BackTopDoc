@@ -1,7 +1,7 @@
 import { Application } from "express"
 import { Error } from "sequelize"
-import { ApiException } from "../../type/exception"
-import { availabilityTypes } from "../../type/availability"
+// import { ApiException } from "../../type/exception"
+// import { availabilityTypes } from "../../type/availability"
 
 const { Availability } = require('../../database/connect')
 
@@ -18,10 +18,10 @@ const { Availability } = require('../../database/connect')
 module.exports = (app: Application) => {
     app.get('/api/availabilities', (req, res) => {
         Availability.findAll()
-            .then((availabilities: availabilityTypes) => {
+            .then((availabilities: any) => {
                 res.status(200).json(availabilities)
             })
-            .catch((error: ApiException) => {
+            .catch((error: any) => {
                 res.status(500).json(error)
             })
     })

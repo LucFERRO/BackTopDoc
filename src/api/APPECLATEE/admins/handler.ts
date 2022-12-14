@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { ApiException } from "../../type/exception";
-import { adminTypes } from "../../type/admin";
-import sequelize from "../../database/sequelize";
+import { ApiException } from "../../../type/exception";
+// import { adminTypes } from "../../../type/";
+import { sequelize } from "../../../database/sequelize";
 const bcrypt = require("bcrypt");
 
 const { Admin, Person } = require("../../database/connect");
@@ -10,7 +10,7 @@ const { DTO } = require("../../dto/DTO")
 
 const getAllAdmins = (req: Request, res: Response) => {
     Admin.findAll({ include: [Person] })
-        .then((admins: adminTypes) => {
+        .then((admins: any) => {
             res.status(200).json((DTO(admins)));
         })
         .catch((error: ApiException) => {
@@ -23,7 +23,7 @@ const getAdminById = async (req: Request, res: Response) => {
         where: { person_id: req.params.id },
         include: [Person]
     })
-        .then((admin: adminTypes) => {
+        .then((admin: any) => {
             if (admin === null) {
                 const message = "Aucun administrateur trouvé.";
                 return res.status(404).json({ message });
@@ -115,7 +115,7 @@ const updateAdmin = async (req: Request, res: Response) => {
 
 const deleteAdmin = (req: Request, res: Response) => {
     Admin.findByPk(req.params.id)
-        .then((admin: adminTypes) => {
+        .then((admin: any) => {
             if (admin === null) {
                 const message = "Aucun administrateur trouvé.";
                 return res.status(404).json({ message: message });

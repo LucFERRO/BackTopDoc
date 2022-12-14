@@ -1,10 +1,10 @@
 const { Router } = require('express')
 
-import { handlerPerson } from './handler'
-import { authenticateToken } from '../../middleware/authenticate'
-import { authorization } from '../../middleware/authorizations';
+import { personHandler } from '../handler/person.handler'
+import { authenticateToken } from '../middleware/authenticate'
+import { authorization } from '../middleware/authorizations';
 
-export const personRouter = Router();
+export const personController = Router();
 
 /**
  * @swagger
@@ -15,15 +15,15 @@ export const personRouter = Router();
 
 /**
  * @openapi
- * /api/persons:
+ * /api/persons/{id}:
  *   get:
  *      tags: [Persons]
- *      description: Get the list of all persons.
+ *      description: Get person by id.
  *      responses:
  *        200:
- *          description: Get the list of all persons.
+ *          description: id.
  */
-personRouter.get('/', handlerPerson.getAllPersons)
+personController.get('/:id', personHandler.getPersonById)
 
 /**
  * @openapi
@@ -41,9 +41,9 @@ personRouter.get('/', handlerPerson.getAllPersons)
  *        200:
  *          description: Get person of given id.
  */
-personRouter.get('/:id'
+// personController.get('/:id'
     // , authenticateToken
-    , handlerPerson.getPersonById)
+    // , handlerPerson.getPersonById)
 
 /**
  * @openapi
@@ -63,7 +63,7 @@ personRouter.get('/:id'
  *        200:
  *          description: Create a new person.
  */
-personRouter.post('/', handlerPerson.createPerson)
+// personController.post('/', handlerPerson.createPerson)
 
 /**
  * @openapi
@@ -88,9 +88,9 @@ personRouter.post('/', handlerPerson.createPerson)
  *        200:
  *          description: Update person of given id.
  */
-personRouter.put('/:id',
-    // authenticateToken, authorization, 
-    handlerPerson.updatePerson)
+// personController.put('/:id',
+    // authenticateToken, authorization,
+    // handlerPerson.updatePerson)
 
 /**
  * @openapi
@@ -107,6 +107,6 @@ personRouter.put('/:id',
  *        200:
  *          description: Delete an person.
  */
-personRouter.delete('/:id',
-    // authenticateToken, authorization, 
-    handlerPerson.deletePerson)
+// personController.delete('/:id',
+    // authenticateToken, authorization,
+    // handlerPerson.deletePerson)

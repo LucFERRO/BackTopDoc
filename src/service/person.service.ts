@@ -12,9 +12,15 @@ export class PersonService {
     async findById(id: number): Promise<PersonDTO | null>{
         return this.personRepository.findById(id).then(personDto => {
             if (personDto === null) return null;
-            personDto.lastname = "M. " + personDto.lastname;
+            // personDto.lastname = "M. " + personDto.lastname;
             return personDto;
         });
     }
+
+    // async findAll(): Promise<PersonDTO[] | null> {
+    //     return this.personRepository.findAll().then(personDto => {
+
+    //     })
+    // }
 
 }
