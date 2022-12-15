@@ -29,17 +29,17 @@ sequelize.authenticate()
     .catch((error: Error) => console.error(`Could not connect to database: ${error}`)
     )
 
-// Person.hasOne(Doctor, { foreignKey: 'doctor_id' })
-// Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
+Person.hasOne(Doctor, { foreignKey: 'doctor_id' })
+Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
 
-// Person.hasOne(Patient, { foreignKey: 'person_id' })
-// Patient.belongsTo(Person, { foreignKey: 'person_id' })
+Person.hasOne(Patient, { foreignKey: 'patient_id' })
+Patient.belongsTo(Person, { foreignKey: 'patient_id' })
 
-// Doctor.hasMany(Appointement, { foreignKey: 'doctor_id' })
-// Appointement.belongsTo(Doctor, { foreignKey: 'doctor_id' })
+Doctor.hasMany(Appointement, { foreignKey: 'doctor_id' })
+Appointement.belongsTo(Doctor, { foreignKey: 'doctor_id' })
 
-// Patient.hasMany(Appointement, { foreignKey: 'patient_id' })
-// Appointement.belongsTo(Patient, { foreignKey: 'patient_id' })
+Patient.hasMany(Appointement, { foreignKey: 'patient_id' })
+Appointement.belongsTo(Patient, { foreignKey: 'patient_id' })
 
 export const initDb = () => {
 
@@ -57,14 +57,14 @@ export const initDb = () => {
                 description: person.description,
                 avatar: person.avatar
             }).then((response: { toJSON: () => string }) => {
-                console.log(response.toJSON())
+                console.log('Person', response.toJSON())
 
-                // TODO : 
+                // TODO : Cadencement ?
                 patients.map(patient => {
                     if (patient.patient_id == person.person_id) {
                         Patient.create({
                             patient_id: patient.patient_id,
-                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+                        }).then((response: { toJSON: () => string }) => console.log('Patient', response.toJSON()))
                     }
                 })
                 doctors.map(doctor => {
@@ -73,9 +73,9 @@ export const initDb = () => {
                             doctor_id: doctor.doctor_id,
                             activity: doctor.activity,
                         }).then((response: { toJSON: () => string }) => {
-                            console.log(response.toJSON())
+                            console.log('Doctor', response.toJSON())
 
-                            // TODO :
+                            // TODO : Cadencement ?
                             appointements.map((appointement) => {
                                 Appointement.create({
                                     appointement_date: appointement.appointement_date,
@@ -83,7 +83,7 @@ export const initDb = () => {
                                     appointement_reason: appointement.appointement_reason,
                                     doctor_id: appointement.doctor_id,
                                     patient_id: appointement.patient_id,
-                                }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+                                }).then((response: { toJSON: () => string }) => console.log('Appointement', response.toJSON()))
                             })
                         })
                     }
@@ -95,14 +95,14 @@ export const initDb = () => {
             Token.create({
                 token_id: token.token_id,
                 token: token.token
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Token', response.toJSON()))
         })
         bans.map(ban => {
             Ban.create({
                 ban_id: ban.ban_id,
                 ban_date: ban.ban_date,
                 ban_reason: ban.ban_reason
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Ban', response.toJSON()))
         })
 
         addresses.map(address => {
@@ -111,13 +111,13 @@ export const initDb = () => {
                 address_number: address.address_number,
                 street_name: address.street_name,
                 zip_code: address.zip_code
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Address', response.toJSON()))
         })
 
         backgrounds.map(background => {
             Background.create({
                 background_id: background.background_id,
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Background', response.toJSON()))
         })
 
         plannings.map(planning => {
@@ -126,7 +126,7 @@ export const initDb = () => {
                 planning_name: planning.planning_name,
                 planning_start: planning.planning_start,
                 planning_end: planning.planning_end,
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Planning', response.toJSON()))
         })
 
         vacations.map(vacation => {
@@ -134,7 +134,7 @@ export const initDb = () => {
                 vacation_id: vacation.vacation_id,
                 vacation_start: vacation.vacation_start,
                 vacation_end: vacation.vacation_end,
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Vacation', response.toJSON()))
         })
 
         workdays.map(workday => {
@@ -144,7 +144,7 @@ export const initDb = () => {
                 workday_start: workday.workday_start,
                 workday_end: workday.workday_end,
                 slot_duration_minutes: workday.slot_duration_minutes
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
         })
 
         console.log('Database successfully initialized.')
