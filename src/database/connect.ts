@@ -47,6 +47,9 @@ import { WorkdayModel } from "../model/workday"
 import { sequelize } from './sequelize'
 import { pathToFileURL } from "url"
 
+
+import { Person2 } from "../model2/person.model"
+
 sequelize.authenticate()
     .then(() => console.log('Successfully connected to database.'))
     .catch((error: Error) => console.error(`Could not connect to database: ${error}`)
@@ -70,6 +73,12 @@ Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
 Person.hasOne(Patient, { foreignKey: 'person_id' })
 Patient.belongsTo(Person, { foreignKey: 'person_id' })
 
+Person2.hasOne(Doctor, { foreignKey: 'doctor_id' })
+Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
+
+Person2.hasOne(Patient, { foreignKey: 'person_id' })
+Patient.belongsTo(Person, { foreignKey: 'person_id' })
+
 Doctor.hasMany(Appointement, { foreignKey: 'doctor_id' })
 Appointement.belongsTo(Doctor, { foreignKey: 'doctor_id' })
 
@@ -79,6 +88,20 @@ Appointement.belongsTo(Patient, { foreignKey: 'patient_id' })
 export const initDb = () => {
 
     return sequelize.sync({ force: true }).then(() => {
+
+        persons.map(person => {
+            Person2.create({
+                person_id: person.person_id,
+                lastname: person.lastname,
+                firstname: person.firstname,
+                mail: person.mail,
+                password: person.password,
+                birthdate: person.birthdate,
+                phone_number: person.phone_number,
+                description: person.description,
+                avatar: person.avatar
+            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+        })
 
         persons.map((person: personTypes) => {
             Person.create({

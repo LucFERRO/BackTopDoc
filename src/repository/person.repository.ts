@@ -8,7 +8,7 @@ export class PersonRepository implements IRepository<PersonDTO> {
 
     async findById(id: number): Promise<PersonDTO | null> {
         //TODO voir pourquoi any au lieu de personTypes
-        return Person.findByPk(id).then((person:any) => PersonMapper.mapToDto(person))
+        return Person.findByPk(id).then((person: any) => PersonMapper.mapToDto(person))
     }
 
     async findAll(): Promise<PersonDTO[]> {
