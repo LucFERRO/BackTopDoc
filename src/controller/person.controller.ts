@@ -23,6 +23,18 @@ export const personController = Router();
  *        200:
  *          description: id.
  */
+ personController.get('/', personHandler.getPersons)
+
+/**
+ * @openapi
+ * /api/persons/{id}:
+ *   get:
+ *      tags: [Persons]
+ *      description: Get person by id.
+ *      responses:
+ *        200:
+ *          description: id.
+ */
 personController.get('/:id', personHandler.getPersonById)
 
 /**

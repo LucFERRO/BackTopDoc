@@ -1,8 +1,6 @@
 import { DataTypes } from "sequelize"
 
-import { personTypes } from "../type/person"
 import { persons } from "../database/mocks/mock-person"
-import { PersonModel } from "../model/person"
 
 import { tokenTypes } from "../type/token"
 import { tokens } from "../database/mocks/mock-token"
@@ -48,14 +46,13 @@ import { sequelize } from './sequelize'
 import { pathToFileURL } from "url"
 
 
-import { Person2 } from "../model2/person.model"
+import { Person } from "../model/person.model"
 
 sequelize.authenticate()
     .then(() => console.log('Successfully connected to database.'))
     .catch((error: Error) => console.error(`Could not connect to database: ${error}`)
     )
 
-export const Person = PersonModel(sequelize, DataTypes)
 export const Token = TokenModel(sequelize, DataTypes)
 export const Ban = BanModel(sequelize, DataTypes)
 export const Address = AddressModel(sequelize, DataTypes)
@@ -73,12 +70,6 @@ Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
 Person.hasOne(Patient, { foreignKey: 'person_id' })
 Patient.belongsTo(Person, { foreignKey: 'person_id' })
 
-Person2.hasOne(Doctor, { foreignKey: 'doctor_id' })
-Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
-
-Person2.hasOne(Patient, { foreignKey: 'person_id' })
-Patient.belongsTo(Person, { foreignKey: 'person_id' })
-
 Doctor.hasMany(Appointement, { foreignKey: 'doctor_id' })
 Appointement.belongsTo(Doctor, { foreignKey: 'doctor_id' })
 
@@ -89,21 +80,7 @@ export const initDb = () => {
 
     return sequelize.sync({ force: true }).then(() => {
 
-        persons.map(person => {
-            Person2.create({
-                person_id: person.person_id,
-                lastname: person.lastname,
-                firstname: person.firstname,
-                mail: person.mail,
-                password: person.password,
-                birthdate: person.birthdate,
-                phone_number: person.phone_number,
-                description: person.description,
-                avatar: person.avatar
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
-        })
-
-        persons.map((person: personTypes) => {
+        persons.map((person) => {
             Person.create({
                 person_id: person.person_id,
                 lastname: person.lastname,

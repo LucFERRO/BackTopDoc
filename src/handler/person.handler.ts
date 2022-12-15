@@ -6,8 +6,7 @@ const personService = new PersonService(new PersonRepository);
 
 const getPersons = async (req: Request, res: Response) => {
     try {
-        const result = await personService.findById(1);
-        if (result === null) return res.status(404).send()
+        const result = await personService.findAll();
         res.status(200).json(result)
 
     } catch (err) {
@@ -18,10 +17,9 @@ const getPersons = async (req: Request, res: Response) => {
 
 const getPersonById = async (req: Request, res: Response) => {
     let requestedId: number = parseInt(req.params.id)
-    console.log('in handler',requestedId)
     try {
         const result = await personService.findById(requestedId);
-        if (result === null) return res.status(404).send("Requested userId does not exist.")
+        if (result === null) return res.status(404).send("Requested user_id does not exist.")
         res.status(200).json(result)
     } catch (err) {
         res.status(500).json({ message: 'ERROR 500', err });

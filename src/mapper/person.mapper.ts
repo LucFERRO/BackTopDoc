@@ -1,14 +1,23 @@
 import { PersonDTO } from "../dto/person.dto"
-import { personTypes } from "../type/person"
+import { Person } from "../model/person.model";
 
 export class PersonMapper {
-    static mapToDto(person: personTypes | null): PersonDTO | null {
+    static mapToDto(person: Person | null): PersonDTO | null {
         if (person === null) return null;
         const dto: PersonDTO = {
             lastname: person.lastname,
             firstname: person.firstname
         }
         return dto;
+    }
+
+    static mapAllToDto(persons: Person[]): PersonDTO[] {
+        return persons.map(person => {
+            return  {
+                lastname: person.lastname,
+                firstname: person.firstname
+            }
+        })
     }
 
     static mapToModel() {

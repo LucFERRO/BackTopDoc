@@ -9,6 +9,10 @@ export class PersonService {
         this.personRepository = _personRepository;
     }
 
+    async findAll(): Promise<PersonDTO[]> {
+        return this.personRepository.findAll()
+    }
+
     async findById(id: number): Promise<PersonDTO | null>{
         return this.personRepository.findById(id).then(personDto => {
             if (personDto === null) return null;

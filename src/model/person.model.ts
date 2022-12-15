@@ -5,7 +5,7 @@ const concatRequiredMessage = (data: string) => {
     return `${data} is required.`
 }
 
-export class Person2 extends Model {
+export class Person extends Model {
     person_id!: number
     lastname!: string
     firstname!: string
@@ -17,7 +17,7 @@ export class Person2 extends Model {
     avatar?: string
 }
 
-Person2.init({
+Person.init({
     person_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -72,9 +72,6 @@ Person2.init({
             is: /^$|^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/g
         },
     },
-
-
-
     description: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -87,7 +84,7 @@ Person2.init({
     {
         sequelize,
         freezeTableName: true,
-        tableName: "persons2",
+        tableName: "persons",
         underscored: true
     }
 );
