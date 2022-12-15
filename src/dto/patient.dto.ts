@@ -1,3 +1,3 @@
 export interface PatientDTO {
-    person_id: number,
+    patient_id: number,
 }

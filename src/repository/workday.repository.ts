@@ -1,6 +1,6 @@
 import { IRepository } from "../core/respository.interface";
 import { WorkdayDTO } from "../dto/workday.dto";
-import { Workday } from "../database/connect";
+import { Workday } from "../model/workday.model";
 import { WorkdayMapper } from "../mapper/workday.mapper";
 
 export class WorkdayRepository implements IRepository<WorkdayDTO> {
@@ -9,7 +9,7 @@ export class WorkdayRepository implements IRepository<WorkdayDTO> {
         return Workday.findByPk(id).then(workday => WorkdayMapper.mapToDto(workday))
     }
 
-    findAll(): Promise<WorkdayDTO[]> {
+    async findAll(): Promise<WorkdayDTO[]> {
         throw new Error("Method not implemented.");
     }
 

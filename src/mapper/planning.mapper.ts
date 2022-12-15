@@ -1,19 +1,24 @@
 import { PlanningDTO } from "../dto/planning.dto"
-import { planningTypes } from "../type/planning"
+import { Planning } from "../model/planning.model";
 
 export class PlanningMapper {
-    static mapToDto(planning: planningTypes | null): PlanningDTO | null {
+    static mapToDto(planning: Planning | null): PlanningDTO | null {
         if (planning === null) return null;
-        const dto: PlanningDTO = {
+        return {
             planning_name: planning.planning_name,
             planning_start: planning.planning_start,
             planning_end: planning.planning_end,
         }
-        return dto;
     }
 
-    static mapToModel() {
-
+    static mapAllToDto(plannings: Planning[]): PlanningDTO[] {
+        return plannings.map(planning => {
+            return  {
+                planning_name: planning.planning_name,
+                planning_start: planning.planning_start,
+                planning_end: planning.planning_end,
+            }
+        })
     }
 
 }

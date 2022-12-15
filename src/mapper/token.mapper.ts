@@ -1,17 +1,20 @@
 import { TokenDTO } from "../dto/token.dto"
-import { tokenTypes } from "../type/token"
+import { Token } from "../model/token.model";
 
 export class TokenMapper {
-    static mapToDto(token: tokenTypes | null): TokenDTO | null {
+    static mapToDto(token: Token | null): TokenDTO | null {
         if (token === null) return null;
-        const dto: TokenDTO = {
+        return {
             token: token.token,
         }
-        return dto;
     }
 
-    static mapToModel() {
-
+    static mapAllToDto(tokens: Token[]): TokenDTO[] {
+        return tokens.map(token => {
+            return  {
+                token: token.token,
+            }
+        })
     }
 
 }

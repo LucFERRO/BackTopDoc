@@ -1,9 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../src/database/sequelize";
-
-const concatRequiredMessage = (data: string) => {
-    return `${data} is required.`
-}
+import { concatRequiredMessage } from "../core/methods"
 
 export class Person extends Model {
     person_id!: number

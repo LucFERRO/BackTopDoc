@@ -1,17 +1,20 @@
 import { BackgroundDTO } from "../dto/background.dto"
-import { backgroundTypes } from "../type/background"
+import { Background } from "../model/background.model";
 
 export class BackgroundMapper {
-    static mapToDto(background: backgroundTypes | null): BackgroundDTO | null {
+    static mapToDto(background: Background | null): BackgroundDTO | null {
         if (background === null) return null;
-        const dto: BackgroundDTO = {
+        return {
             background_id: background.background_id,
         }
-        return dto;
     }
 
-    static mapToModel() {
-
+    static mapAllToDto(backgrounds: Background[]): BackgroundDTO[] {
+        return backgrounds.map(background => {
+            return  {
+                background_id: background.background_id,
+            }
+        })
     }
 
 }

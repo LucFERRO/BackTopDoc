@@ -1,6 +1,6 @@
 import { IRepository } from "../core/respository.interface";
 import { DoctorDTO } from "../dto/doctor.dto";
-import { Doctor } from "../database/connect";
+import { Doctor } from "../model/doctor.model";
 import { DoctorMapper } from "../mapper/doctor.mapper";
 
 export class DoctorRepository implements IRepository<DoctorDTO> {
@@ -9,7 +9,7 @@ export class DoctorRepository implements IRepository<DoctorDTO> {
         return Doctor.findByPk(id).then(doctor => DoctorMapper.mapToDto(doctor))
     }
 
-    findAll(): Promise<DoctorDTO[]> {
+    async findAll(): Promise<DoctorDTO[]> {
         throw new Error("Method not implemented.");
     }
 

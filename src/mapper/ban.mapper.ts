@@ -1,18 +1,22 @@
 import { BanDTO } from "../dto/ban.dto"
-import { banTypes } from "../type/ban"
+import { Ban } from "../model/ban.model";
 
 export class BanMapper {
-    static mapToDto(ban: banTypes | null): BanDTO | null {
+    static mapToDto(ban: Ban | null): BanDTO | null {
         if (ban === null) return null;
-        const dto: BanDTO = {
-            ban_reason: ban.ban_reason,
+        return {
             ban_date: ban.ban_date,
+            ban_reason: ban.ban_reason,
         }
-        return dto;
     }
 
-    static mapToModel() {
-
+    static mapAllToDto(bans: Ban[]): BanDTO[] {
+        return bans.map(ban => {
+            return  {
+                ban_date: ban.ban_date,
+                ban_reason: ban.ban_reason,
+            }
+        })
     }
 
 }

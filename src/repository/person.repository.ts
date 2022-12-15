@@ -1,7 +1,7 @@
 import { IRepository } from "../core/respository.interface";
 import { PersonDTO } from "../dto/person.dto";
-import { PersonMapper } from "../mapper/person.mapper";
 import { Person } from "../model/person.model";
+import { PersonMapper } from "../mapper/person.mapper";
 
 export class PersonRepository implements IRepository<PersonDTO> {
 

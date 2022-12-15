@@ -4,11 +4,10 @@ import { Person } from "../model/person.model";
 export class PersonMapper {
     static mapToDto(person: Person | null): PersonDTO | null {
         if (person === null) return null;
-        const dto: PersonDTO = {
+        return {
             lastname: person.lastname,
             firstname: person.firstname
         }
-        return dto;
     }
 
     static mapAllToDto(persons: Person[]): PersonDTO[] {
@@ -18,10 +17,6 @@ export class PersonMapper {
                 firstname: person.firstname
             }
         })
-    }
-
-    static mapToModel() {
-
     }
 
 }

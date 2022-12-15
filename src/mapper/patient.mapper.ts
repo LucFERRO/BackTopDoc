@@ -1,17 +1,20 @@
 import { PatientDTO } from "../dto/patient.dto"
-import { patientTypes } from "../type/patient"
+import { Patient } from "../model/patient.model";
 
 export class PatientMapper {
-    static mapToDto(patient: patientTypes | null): PatientDTO | null {
+    static mapToDto(patient: Patient | null): PatientDTO | null {
         if (patient === null) return null;
-        const dto: PatientDTO = {
-            person_id: patient.person_id,
+        return {
+            patient_id: patient.patient_id,
         }
-        return dto;
     }
 
-    static mapToModel() {
-
+    static mapAllToDto(patients: Patient[]): PatientDTO[] {
+        return patients.map(patient => {
+            return  {
+                patient_id: patient.patient_id,
+            }
+        })
     }
 
 }

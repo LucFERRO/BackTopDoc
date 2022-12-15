@@ -1,5 +1,5 @@
 export const patients = [
     {
-        person_id: 1,
+        patient_id: 1,
     },
 ]

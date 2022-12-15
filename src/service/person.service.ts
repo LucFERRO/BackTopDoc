@@ -21,10 +21,4 @@ export class PersonService {
         });
     }
 
-    // async findAll(): Promise<PersonDTO[] | null> {
-    //     return this.personRepository.findAll().then(personDto => {
-
-    //     })
-    // }
-
 }

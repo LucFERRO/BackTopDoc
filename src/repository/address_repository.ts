@@ -1,6 +1,6 @@
 import { IRepository } from "../core/respository.interface";
 import { AddressDTO } from "../dto/address.dto";
-import { Address } from "../database/connect";
+import { Address } from "../model/address.model";
 import { AddressMapper } from "../mapper/address.mapper";
 
 export class AddressRepository implements IRepository<AddressDTO> {
@@ -9,7 +9,7 @@ export class AddressRepository implements IRepository<AddressDTO> {
         return Address.findByPk(id).then(address => AddressMapper.mapToDto(address))
     }
 
-    findAll(): Promise<AddressDTO[]> {
+    async findAll(): Promise<AddressDTO[]> {
         throw new Error("Method not implemented.");
     }
 

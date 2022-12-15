@@ -1,6 +1,6 @@
 import { IRepository } from "../core/respository.interface";
 import { BackgroundDTO } from "../dto/background.dto";
-import { Background } from "../database/connect";
+import { Background } from "../model/background.model";
 import { BackgroundMapper } from "../mapper/background.mapper";
 
 export class BackgroundRepository implements IRepository<BackgroundDTO> {
@@ -9,7 +9,7 @@ export class BackgroundRepository implements IRepository<BackgroundDTO> {
         return Background.findByPk(id).then(background => BackgroundMapper.mapToDto(background))
     }
 
-    findAll(): Promise<BackgroundDTO[]> {
+    async findAll(): Promise<BackgroundDTO[]> {
         throw new Error("Method not implemented.");
     }
 

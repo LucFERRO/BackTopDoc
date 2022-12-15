@@ -1,18 +1,22 @@
 import { VacationDTO } from "../dto/vacation.dto"
-import { vacationTypes } from "../type/vacation"
+import { Vacation } from "../model/vacation.model";
 
 export class VacationMapper {
-    static mapToDto(vacation: vacationTypes | null): VacationDTO | null {
+    static mapToDto(vacation: Vacation | null): VacationDTO | null {
         if (vacation === null) return null;
-        const dto: VacationDTO = {
+        return {
             vacation_start: vacation.vacation_start,
-            vacation_end: vacation.vacation_end
+            vacation_end: vacation.vacation_end,
         }
-        return dto;
     }
 
-    static mapToModel() {
-
+    static mapAllToDto(vacations: Vacation[]): VacationDTO[] {
+        return vacations.map(vacation => {
+            return  {
+                vacation_start: vacation.vacation_start,
+                vacation_end: vacation.vacation_end,
+            }
+        })
     }
 
 }

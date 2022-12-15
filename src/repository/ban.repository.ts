@@ -1,6 +1,6 @@
 import { IRepository } from "../core/respository.interface";
 import { BanDTO } from "../dto/ban.dto";
-import { Ban } from "../database/connect";
+import { Ban } from "../model/ban.model";
 import { BanMapper } from "../mapper/ban.mapper";
 
 export class BanRepository implements IRepository<BanDTO> {
@@ -9,7 +9,7 @@ export class BanRepository implements IRepository<BanDTO> {
         return Ban.findByPk(id).then(ban => BanMapper.mapToDto(ban))
     }
 
-    findAll(): Promise<BanDTO[]> {
+    async findAll(): Promise<BanDTO[]> {
         throw new Error("Method not implemented.");
     }
 

@@ -1,6 +1,6 @@
 import { IRepository } from "../core/respository.interface";
 import { TokenDTO } from "../dto/token.dto";
-import { Token } from "../database/connect";
+import { Token } from "../model/token.model";
 import { TokenMapper } from "../mapper/token.mapper";
 
 export class TokenRepository implements IRepository<TokenDTO> {
@@ -9,7 +9,7 @@ export class TokenRepository implements IRepository<TokenDTO> {
         return Token.findByPk(id).then(token => TokenMapper.mapToDto(token))
     }
 
-    findAll(): Promise<TokenDTO[]> {
+    async findAll(): Promise<TokenDTO[]> {
         throw new Error("Method not implemented.");
     }
 
