@@ -75,15 +75,18 @@ export const initDb = () => {
                         }).then((response: { toJSON: () => string }) => {
                             console.log('Doctor', response.toJSON())
 
-                            // TODO : Cadencement ?
                             appointements.map((appointement) => {
-                                Appointement.create({
-                                    appointement_date: appointement.appointement_date,
-                                    appointement_duration_minutes: appointement.appointement_duration_minutes,
-                                    appointement_reason: appointement.appointement_reason,
-                                    doctor_id: appointement.doctor_id,
-                                    patient_id: appointement.patient_id,
-                                }).then((response: { toJSON: () => string }) => console.log('Appointement', response.toJSON()))
+                                
+                                // TODO : Cadencement ?
+                                if (doctor.doctor_id == appointement.doctor_id) {
+                                    Appointement.create({
+                                        appointement_date: appointement.appointement_date,
+                                        appointement_duration_minutes: appointement.appointement_duration_minutes,
+                                        appointement_reason: appointement.appointement_reason,
+                                        doctor_id: appointement.doctor_id,
+                                        patient_id: appointement.patient_id,
+                                    }).then((response: { toJSON: () => string }) => console.log('Appointement', response.toJSON()))
+                                }
                             })
                         })
                     }

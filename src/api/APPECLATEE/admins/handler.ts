@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ApiException } from "../../../type/exception";
+// import { ApiException } from "../../../type/exception";
 // import { adminTypes } from "../../../type/";
 import { sequelize } from "../../../database/sequelize";
 const bcrypt = require("bcrypt");
