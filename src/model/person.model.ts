@@ -9,7 +9,7 @@ export class Person extends Model {
     mail!: string
     password!: string
     birthdate!: string
-    phone_number?: string
+    phone_number!: string
     description?: string
     avatar?: string
 }

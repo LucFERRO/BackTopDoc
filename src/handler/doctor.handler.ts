@@ -36,10 +36,15 @@ export class DoctorHandler {
     };
 
     createDoctor = async (req: Request, res: Response) => {
-        if (!req.body.password) return res.status(400).json({
-            message: "Password required.",
-        });
-        // const result = await this.doctorService.create(5)
+        try {
+            if (!req.body.password) return res.status(400).json({
+                message: "Password required.",
+            });
+            const result = await this.doctorService.create(req.body)
+            return res.status(200).json(result)
+        } catch (err) {
+            return res.status(500).json({ message: 'Error in handler', err })
+        }
     }
 
 }

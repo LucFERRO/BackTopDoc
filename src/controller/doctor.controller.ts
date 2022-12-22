@@ -39,40 +39,36 @@ doctorController.get('/:id',
     // , authenticateToken
     doctorHandler.getDoctorById)
 
-// const createDoctor = async (req: Request, res: Response) => {
+/**
+ * @openapi
+ * /api/doctors:
+ *   post:
+ *      tags: [Doctors]
+ *      description: Create a new doctor.
+ *      consumes:
+ *       - application/json
+ *      parameters:
+ *       - name: JSON
+ *         in: body
+ *         required: true
+ *         type: object
+ *         default: { "activity":"activity","lastname": "lastname", "firstname": "firstname", "mail": "email@email.fr", "password": "string","birthdate": "01-01-2000", "phone_number" : "0123456789", "description": "description","avatar": "avatar" }
+ *      responses:
+ *        200:
+ *          description: Create.
+ */
+doctorController.post('/',
+    // , authenticateToken
+    doctorHandler.createDoctor)
 
-//     if (!req.body.password)
-//         return res.status(400).json({
-//             passwordRequired: true,
-//             message: "Password is required.",
-//         });
 
-//     const { lastname, firstname, mail, password, birthdate, phone_number, description, avatar } = req.body;
 
-//     if (description) Object.assign(req.body, { description: description })
-//     if (avatar) Object.assign(req.body, { avatar: avatar })
 
-//     let hashedPassword = await bcrypt.hash(doctorInfo.password, 10);
-//     try {
-//         await sequelize.transaction(async (t: any) => {
-//             const newDoctor = await Doctor.create(
-//                 { ...doctorInfo, password: hashedPassword },
-//                 { transaction: t }
-//             )
 
-//             doctorInfo = Object.assign(doctorInfo, { doctor_id: newDoctor.doctor_id });
 
-//             const newDoctor = await Doctor.create(doctorInfo, { transaction: t })
-//             return res.status(200).json(newDoctor)
-//         })
-//     } catch (error: any) {
-//         let message = 'ERROR 500'
-//         if (error.errors[0].path == 'mail') message = 'Email invalide'
-//         if (error.errors[0].path == 'phone_number') message = 'Numéro de téléphone invalide'
-//         if (error.errors[0].path == 'zip_code') message = 'Code postal invalide'
-//         return res.status(500).json({ message, error });
-//     }
-// }
+
+
+
 
 // const updateDoctor = async (req: Request, res: Response) => {
 //     const id = req.params.id;

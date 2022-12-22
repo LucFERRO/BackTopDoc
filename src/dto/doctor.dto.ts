@@ -5,6 +5,10 @@ export interface DoctorDTO {
     mail: string,
     birthdate: string,
     phone_number: string,
-    description: string,
-    avatar: string,
+    description?: string,
+    avatar?: string,
+}
+
+export interface DoctorDTOFull extends DoctorDTO {
+    password: string
 }
