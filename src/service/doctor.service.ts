@@ -1,7 +1,6 @@
 import { DoctorDTO, DoctorDTOFull } from "../dto/doctor.dto";
-import { IRepository, IRepositoryInheritance } from "../core/respository.interface";
+import { IRepositoryInheritance } from "../core/respository.interface";
 import { IService } from "../core/service.interface";
-import { PersonDTO } from "../dto/person.dto";
 import { Person } from "../model/person.model";
 const bcrypt = require("bcrypt");
 
@@ -20,14 +19,11 @@ export class DoctorService implements IService<DoctorDTO> {
     async findById(id: number): Promise<DoctorDTO | null> {
         return this.doctorRepository.findById(id).then(doctorDto => {
             if (doctorDto === null) return null;
-            // doctorDto.lastname = "M. " + doctorDto.lastname;
             return doctorDto;
         });
     }
 
     async create(doctorRawInfo: DoctorDTO & Person): Promise<DoctorDTO | undefined> {
-        //bcrypt + bordel
-
         let hashedPassword = await bcrypt.hash(doctorRawInfo.password, 10);
 
         let doctorInfo: DoctorDTOFull = {
@@ -48,27 +44,22 @@ export class DoctorService implements IService<DoctorDTO> {
 
     async update(data: DoctorDTO & Person, id: number): Promise<number | boolean | undefined> {
         let hashedPassword
-
-        if (data.password) {
-            hashedPassword = await bcrypt.hash(data.password, 10)
-        }
+        if (data.password) hashedPassword = await bcrypt.hash(data.password, 10)
 
         let doctorInfo: Partial<DoctorDTOFull> = {
             activity: data.activity,
             lastname: data.lastname,
             firstname: data.firstname,
-            password: hashedPassword,
             mail: data.mail,
             birthdate: data.birthdate,
             phone_number: data.phone_number,
+            password: hashedPassword,
             description: data.description,
             avatar: data.avatar
         }
 
         const updatedDoctor = await this.doctorRepository.update(doctorInfo, id)
-        console.log('service', updatedDoctor)
-        
-        return 1
+        return updatedDoctor
     }
 
     async delete(id: number): Promise<boolean | number> {

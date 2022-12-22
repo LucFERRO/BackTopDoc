@@ -15,7 +15,7 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
         return Doctor.findAll({ include: [Person] }).then((doctors: Doctor[]) => doctors.map((doctor: Doctor) => DoctorMapper.mapToDto(doctor)))
     }
 
-    async create(data: DoctorDTOFull): Promise<DoctorDTO | undefined> {
+    async create(data: DoctorDTOFull): Promise<DoctorDTO> {
 
         const personInfo = {
             lastname: data.lastname,
@@ -32,7 +32,7 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
             activity: data.activity
         }
         try {
-            await sequelize.transaction(async (t: Transaction) => {
+            return await sequelize.transaction(async (t: Transaction) => {
 
                 const newPerson = await Person.create(
                     personInfo,
@@ -52,7 +52,8 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
         }
     }
 
-    async update(data: DoctorDTOFull, id: number): Promise<boolean | number | undefined> {
+    async update(data: DoctorDTOFull, id: number): Promise<boolean | number> {
+
         const personInfo = {
             lastname: data.lastname,
             firstname: data.firstname,
@@ -67,15 +68,14 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
         const doctorInfo = {
             activity: data.activity
         }
+
         try {
-            await sequelize.transaction(async (t) => {
+            return await sequelize.transaction(async (t) => {
 
                 await Person.update(
                     personInfo,
                     {
                         where: { person_id: id },
-                        // returning: true,
-                        // plain: true,
                         transaction: t
                     }
                 )
@@ -84,18 +84,14 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
                     doctorInfo,
                     {
                         where: { doctor_id: id },
-                        // returning: true,
-                        // plain: true,
                         transaction: t
                     }
-                    )
-                console.log('repo', updatedDoctor)
+                )
                 return updatedDoctor[0]
             })
 
-        } catch (error: any) {
-            console.log(error)
-            return null as any
+        } catch (error) {
+            throw error
         }
     }
 

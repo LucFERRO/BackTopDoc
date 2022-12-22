@@ -52,7 +52,8 @@ export class PatientHandler {
 
         try {
             const result = await this.patientService.update(req.body, id)
-            return res.status(200).json(result)
+            if (result) return res.status(200).json({message: 'Patient successfully updated.'})
+            return res.status(404).send()
         } catch (err) {
             return res.status(500).json({ message: 'Error in handler', err })
         }

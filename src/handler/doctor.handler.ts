@@ -52,7 +52,6 @@ export class DoctorHandler {
 
         try {
             const result = await this.doctorService.update(req.body, id)
-            console.log('handler',result)
             if (result) return res.status(200).json({message: 'Doctor successfully updated.'})
             return res.status(404).send()
         } catch (err) {

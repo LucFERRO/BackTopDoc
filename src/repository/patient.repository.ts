@@ -6,7 +6,7 @@ import { PatientMapper } from "../mapper/patient.mapper";
 import { sequelize } from "../database/sequelize";
 
 export class PatientRepository implements IRepositoryInheritance<PatientDTO, PatientDTOFull> {
-    
+
     async findById(id: number): Promise<PatientDTO | null> {
         return Patient.findByPk(id, { include: [Person] }).then(patient => PatientMapper.mapToDto(patient))
     }
@@ -15,7 +15,7 @@ export class PatientRepository implements IRepositoryInheritance<PatientDTO, Pat
         return Patient.findAll({ include: [Person] }).then((patients: Patient[]) => patients.map((patient: Patient) => PatientMapper.mapToDto(patient)))
     }
 
-    async create(data: PatientDTOFull): Promise<PatientDTO | undefined> {
+    async create(data: PatientDTOFull): Promise<PatientDTO> {
 
         const personInfo = {
             secu_number: data.secu_number,
@@ -32,9 +32,9 @@ export class PatientRepository implements IRepositoryInheritance<PatientDTO, Pat
         const patientInfo = {
             secu_number: data.secu_number
         }
-        
+
         try {
-            await sequelize.transaction(async (t) => {
+            return await sequelize.transaction(async (t) => {
 
                 const newPerson = await Person.create(
                     personInfo,
@@ -54,9 +54,49 @@ export class PatientRepository implements IRepositoryInheritance<PatientDTO, Pat
         }
     }
 
-    async update(data: any, id: number): Promise<boolean | number> {
-        return Patient.update(data, { where: { patient_id: id } }).then(good => good[0])
+    async update(data: PatientDTOFull, id: number): Promise<boolean | number> {
+
+        const personInfo = {
+            lastname: data.lastname,
+            firstname: data.firstname,
+            mail: data.mail,
+            password: data.password,
+            birthdate: data.birthdate,
+            phone_number: data.phone_number,
+            description: data.description,
+            avatar: data.avatar
+        }
+
+        const patientInfo = {
+            secu_number: data.secu_number
+        }
+
+        try {
+            return await sequelize.transaction(async (t) => {
+
+                await Person.update(
+                    personInfo,
+                    {
+                        where: { person_id: id },
+                        transaction: t
+                    }
+                )
+
+                const updatedPatient = await Patient.update(
+                    patientInfo,
+                    {
+                        where: { patient_id: id },
+                        transaction: t
+                    }
+                )
+                return updatedPatient[0]
+            })
+
+        } catch (error) {
+            throw error
+        }
     }
+
 
     async delete(id: number): Promise<boolean | number> {
         return Patient.destroy({ where: { patient_id: id } }).then(good => good)

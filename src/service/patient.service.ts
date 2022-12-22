@@ -1,5 +1,5 @@
 import { PatientDTO, PatientDTOFull } from "../dto/patient.dto";
-import { IRepository, IRepositoryInheritance } from "../core/respository.interface";
+import { IRepositoryInheritance } from "../core/respository.interface";
 import { IService } from "../core/service.interface";
 import { Person } from "../model/person.model";
 const bcrypt = require("bcrypt");
@@ -19,17 +19,14 @@ export class PatientService implements IService<PatientDTO> {
     async findById(id: number): Promise<PatientDTO | null> {
         return this.patientRepository.findById(id).then(patientDto => {
             if (patientDto === null) return null;
-            // patientDto.lastname = "M. " + patientDto.lastname;
             return patientDto;
         });
     }
 
     async create(patientRawInfo: PatientDTO & Person): Promise<PatientDTO | undefined> {
-        //bcrypt + bordel
-
         let hashedPassword = await bcrypt.hash(patientRawInfo.password, 10);
 
-        let patientInfo : PatientDTOFull = {
+        let patientInfo: PatientDTOFull = {
             secu_number: patientRawInfo.secu_number,
             lastname: patientRawInfo.lastname,
             firstname: patientRawInfo.firstname,
@@ -45,8 +42,24 @@ export class PatientService implements IService<PatientDTO> {
         return this.patientRepository.create(patientInfo)
     }
 
-    async update(t: PatientDTO, id: number): Promise<number | boolean | undefined> {
-        throw new Error("Method not implemented.");
+    async update(data: PatientDTO & Person, id: number): Promise<number | boolean | undefined> {
+        let hashedPassword
+        if (data.password) hashedPassword = await bcrypt.hash(data.password, 10)
+
+        let patientInfo: Partial<PatientDTOFull> = {
+            secu_number: data.secu_number,
+            lastname: data.lastname,
+            firstname: data.firstname,
+            mail: data.mail,
+            birthdate: data.birthdate,
+            phone_number: data.phone_number,
+            password: hashedPassword,
+            description: data.description,
+            avatar: data.avatar
+        }
+
+        const updatedPatient = await this.patientRepository.update(patientInfo, id)
+        return updatedPatient
     }
 
     async delete(id: number): Promise<boolean | number> {
