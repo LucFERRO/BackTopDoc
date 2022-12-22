@@ -4,6 +4,12 @@ import { Background } from "../model/background.model";
 import { BackgroundMapper } from "../mapper/background.mapper";
 
 export class BackgroundRepository implements IRepository<BackgroundDTO> {
+    update(data: BackgroundDTO, id: number): Promise<number | boolean> {
+        throw new Error("Method not implemented.");
+    }
+    delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
     async findById(id: number): Promise<BackgroundDTO | null> {
         return Background.findByPk(id).then(background => BackgroundMapper.mapToDto(background))
@@ -17,12 +23,5 @@ export class BackgroundRepository implements IRepository<BackgroundDTO> {
         throw new Error("Method not implemented.");
     }
 
-    update(t: BackgroundDTO): Promise<BackgroundDTO> {
-        throw new Error("Method not implemented.");
-    }
-
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
 
 }

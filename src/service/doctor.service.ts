@@ -30,7 +30,7 @@ export class DoctorService implements IService<DoctorDTO> {
 
         let hashedPassword = await bcrypt.hash(doctorRawInfo.password, 10);
 
-        let doctorInfo : DoctorDTOFull = {
+        let doctorInfo: DoctorDTOFull = {
             activity: doctorRawInfo.activity,
             lastname: doctorRawInfo.lastname,
             firstname: doctorRawInfo.firstname,
@@ -46,7 +46,32 @@ export class DoctorService implements IService<DoctorDTO> {
         return this.doctorRepository.create(doctorInfo)
     }
 
-    delete(id: number): Promise<boolean | number> {
+    async update(data: DoctorDTO & Person, id: number): Promise<number | boolean | undefined> {
+        let hashedPassword
+
+        if (data.password) {
+            hashedPassword = await bcrypt.hash(data.password, 10)
+        }
+
+        let doctorInfo: Partial<DoctorDTOFull> = {
+            activity: data.activity,
+            lastname: data.lastname,
+            firstname: data.firstname,
+            password: hashedPassword,
+            mail: data.mail,
+            birthdate: data.birthdate,
+            phone_number: data.phone_number,
+            description: data.description,
+            avatar: data.avatar
+        }
+
+        const updatedDoctor = await this.doctorRepository.update(doctorInfo, id)
+        console.log('service', updatedDoctor)
+        
+        return 1
+    }
+
+    async delete(id: number): Promise<boolean | number> {
         return this.doctorRepository.delete(id)
     }
 

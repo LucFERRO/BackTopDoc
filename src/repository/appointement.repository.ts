@@ -4,6 +4,12 @@ import { Appointement } from "../model/appointement.model";
 import { AppointementMapper } from "../mapper/appointement.mapper";
 
 export class AppointementRepository implements IRepository<AppointementDTO> {
+    update(data: AppointementDTO, id: number): Promise<number | boolean> {
+        throw new Error("Method not implemented.");
+    }
+    delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
     async findById(id: number): Promise<AppointementDTO | null> {
         return Appointement.findByPk(id).then(appointement => AppointementMapper.mapToDto(appointement))
@@ -17,12 +23,6 @@ export class AppointementRepository implements IRepository<AppointementDTO> {
         throw new Error("Method not implemented.");
     }
         
-    update(t: AppointementDTO): Promise<AppointementDTO> {
-        throw new Error("Method not implemented.");
-    }
 
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
 
 }

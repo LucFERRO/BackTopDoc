@@ -64,6 +64,7 @@ export const initDb = () => {
                     if (patient.patient_id == person.person_id) {
                         Patient.create({
                             patient_id: patient.patient_id,
+                            secu_number: patient.secu_number
                         }).then((response: { toJSON: () => string }) => console.log('Patient', response.toJSON()))
                     }
                 })

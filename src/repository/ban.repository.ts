@@ -4,6 +4,12 @@ import { Ban } from "../model/ban.model";
 import { BanMapper } from "../mapper/ban.mapper";
 
 export class BanRepository implements IRepository<BanDTO> {
+    update(data: BanDTO, id: number): Promise<number | boolean> {
+        throw new Error("Method not implemented.");
+    }
+    delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
     async findById(id: number): Promise<BanDTO | null> {
         return Ban.findByPk(id).then(ban => BanMapper.mapToDto(ban))
@@ -17,12 +23,5 @@ export class BanRepository implements IRepository<BanDTO> {
         throw new Error("Method not implemented.");
     }    
 
-    update(t: BanDTO): Promise<BanDTO> {
-        throw new Error("Method not implemented.");
-    }
-
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
 
 }

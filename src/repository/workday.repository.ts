@@ -4,6 +4,12 @@ import { Workday } from "../model/workday.model";
 import { WorkdayMapper } from "../mapper/workday.mapper";
 
 export class WorkdayRepository implements IRepository<WorkdayDTO> {
+    update(data: WorkdayDTO, id: number): Promise<number | boolean> {
+        throw new Error("Method not implemented.");
+    }
+    delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
     async findById(id: number): Promise<WorkdayDTO | null> {
         return Workday.findByPk(id).then(workday => WorkdayMapper.mapToDto(workday))
@@ -17,12 +23,6 @@ export class WorkdayRepository implements IRepository<WorkdayDTO> {
         throw new Error("Method not implemented.");
     }
         
-    update(t: WorkdayDTO): Promise<WorkdayDTO> {
-        throw new Error("Method not implemented.");
-    }
 
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
 
 }

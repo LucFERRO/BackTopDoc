@@ -2,49 +2,49 @@ const { Router } = require('express')
 
 import { authenticateToken } from '../middleware/authenticate'
 import { authorization } from '../middleware/authorizations';
-import { doctorHandler } from "../core/initialisation";
+import { patientHandler } from "../core/initialisation";
 
-export const doctorController = Router();
+export const patientController = Router();
 
 /**
  * @swagger
  * tags:
- *      name: Doctors
- *      description: Manage doctors
+ *      name: Patients
+ *      description: Manage patients
  */
 
 /**
  * @openapi
- * /api/doctors:
+ * /api/patients:
  *   get:
- *      tags: [Doctors]
- *      description: Get list of doctors
+ *      tags: [Patients]
+ *      description: Get list of patients
  *      responses:
  *        200:
  *          description: Get all.
  */
-doctorController.get('/', doctorHandler.getDoctors)
+patientController.get('/', patientHandler.getPatients)
 
 /**
  * @openapi
- * /api/doctors/{id}:
+ * /api/patients/{id}:
  *   get:
- *      tags: [Doctors]
- *      description: Get doctor by id.
+ *      tags: [Patients]
+ *      description: Get patient by id.
  *      responses:
  *        200:
  *          description: Get by id.
  */
-doctorController.get('/:id',
+patientController.get('/:id',
     // , authenticateToken
-    doctorHandler.getDoctorById)
+    patientHandler.getPatientById)
 
 /**
  * @openapi
- * /api/doctors:
+ * /api/patients:
  *   post:
- *      tags: [Doctors]
- *      description: Create a new doctor.
+ *      tags: [Patients]
+ *      description: Create a new patient.
  *      consumes:
  *       - application/json
  *      parameters:
@@ -52,22 +52,21 @@ doctorController.get('/:id',
  *         in: body
  *         required: true
  *         type: object
- *         default: { "activity":"activity","lastname": "lastname", "firstname": "firstname", "mail": "email@email.fr", "password": "string","birthdate": "01-01-2000", "phone_number" : "0123456789", "description": "description","avatar": "avatar" }
+ *         default: { "secu_number":"197059740706475","lastname": "lastname", "firstname": "firstname", "mail": "email@email.fr", "password": "string","birthdate": "01-01-2000", "phone_number" : "0123456789", "description": "description","avatar": "avatar" }
  *      responses:
  *        200:
  *          description: Create.
  */
-doctorController.post('/',
+patientController.post('/',
     // , authenticateToken
-    doctorHandler.createDoctor)
-
+    patientHandler.createPatient)
 
 /**
  * @openapi
- * /api/doctors/{id}:
+ * /api/patients/{id}:
  *  put:
- *      tags: [Doctors]
- *      description: Update a doctor.
+ *      tags: [Patients]
+ *      description: Update a patient.
  *      consumes:
  *       - application/json
  *      parameters:
@@ -75,82 +74,82 @@ doctorController.post('/',
  *         in: path
  *         required: true
  *         type: integer
- *         default: 1000001
+ *         default: 1000000
  *       - name: JSON
  *         in: body
  *         required: true
  *         type: object
- *         default: { "activity":"activity","lastname": "lastname", "firstname": "firstname", "mail": "email@email.fr", "password": "string","birthdate": "01-01-2000", "phone_number" : "0123456789", "description": "description","avatar": "avatar" }
+ *         default: { "secu_number":"197059740706475", "lastname": "lastname", "firstname": "firstname", "mail": "email@email.fr", "password": "string","birthdate": "01-01-2000", "phone_number" : "0123456789", "description": "description","avatar": "avatar" }
  *      responses:
  *        200:
  *          description: Update.
  */
-doctorController.put('/:id',
-    // , authenticateToken
-    doctorHandler.updateDoctor)
+ patientController.put('/:id',
+ // , authenticateToken
+ patientHandler.updatePatient)
 
 /**
  * @openapi
- * /api/doctors/{id}:
+ * /api/patients/{id}:
  *  delete:
- *      tags: [Doctors]
- *      description: Delete a doctor
+ *      tags: [Patients]
+ *      description: Delete a patient
  *      parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         type: integer
- *         default: 1000001
+ *         default: 1000000
  *      responses:
  *        200:
  *          description: Delete.
  */
-doctorController.delete('/:id',
+patientController.delete('/:id',
     // , authenticateToken
-    doctorHandler.deleteDoctor)
+    patientHandler.deletePatient)
 
 
 
 
 
 
-// const updateDoctor = async (req: Request, res: Response) => {
+// const updatePatient = async (req: Request, res: Response) => {
 //     const id = req.params.id;
 
 //     const { name, siret, mail, city, zip_code, address, avatar, description, availabilities, phone_number, is_active, is_pending, role } = req.body;
 
 //     if (!siretValidate.isSIRET(siret)) return res.status(400).json({ message: 'SIRET invalide' })
 
-//     let doctorInfo = { name, siret, availabilities };
-//     let doctorInfo = { mail, city, zip_code, address, avatar, phone_number, is_active, is_pending, role };
+//     let patientInfo = { name, siret, availabilities };
+//     let patientInfo = { mail, city, zip_code, address, avatar, phone_number, is_active, is_pending, role };
 
-//     if (description) Object.assign(doctorInfo, { description: description })
-//     if (availabilities) Object.assign(doctorInfo, { availabilities: availabilities })
+//     if (description) Object.assign(patientInfo, { description: description })
+//     if (availabilities) Object.assign(patientInfo, { availabilities: availabilities })
 
 //     if (req.body.password) {
 //         let hashedPassword = await bcrypt.hash(req.body.password, 10);
-//         doctorInfo = Object.assign(doctorInfo, { password: hashedPassword });
+//         patientInfo = Object.assign(patientInfo, { password: hashedPassword });
 //     }
 
 //     try {
 //         await sequelize.transaction(async (t: any) => {
-//             const updatedDoctor: any = await Doctor.update(
-//                 doctorInfo,
+//             const updatedPatient: any = await Patient.update(
+//                 patientInfo,
 //                 {
-//                     where: { doctor_id: id },
+//                     where: { patient_id: id },
 //                     returning: true,
 //                     plain: true,
 //                     transaction: t,
 //                 }
 //             );
 
-//             await Doctor.update(doctorInfo, {
-//                 where: { doctor_id: updatedDoctor[1].doctor_id },
+//             await Patient.update(patientInfo, {
+//                 where: { patient_id: updatedPatient[1].patient_id },
 //                 returning: true,
 //                 plain: true,
 //                 transaction: t,
 //             });
-//             return res.status(200).json(updatedDoctor[1]);
+//             return res.status(200).json(updatedPatient[1]);
 //         });
 //     } catch (error: any) {
 //         let message = 'ERROR 500'
@@ -161,20 +160,20 @@ doctorController.delete('/:id',
 //     }
 // }
 
-// const deleteDoctor = (req: Request, res: Response) => {
-//     Doctor.findByPk(req.params.id)
-//         .then((doctor: doctorTypes) => {
-//             if (doctor === null) {
+// const deletePatient = (req: Request, res: Response) => {
+//     Patient.findByPk(req.params.id)
+//         .then((patient: patientTypes) => {
+//             if (patient === null) {
 //                 const message = "Aucun recruteur trouvé.";
 //                 return res.status(404).json({ message: message });
 //             }
 
-//             const deletedDoctor = doctor;
-//             return Doctor.destroy({
-//                 where: { doctor_id: doctor.doctor_id },
+//             const deletedPatient = patient;
+//             return Patient.destroy({
+//                 where: { patient_id: patient.patient_id },
 //             }).then(() => {
-//                 const message = `Le recruteur ${deletedDoctor.doctor_id} a bien été supprimé.`;
-//                 res.json({ message, data: deletedDoctor });
+//                 const message = `Le recruteur ${deletedPatient.patient_id} a bien été supprimé.`;
+//                 res.json({ message, data: deletedPatient });
 //             });
 //         })
 //         .catch((error: ApiException) => {

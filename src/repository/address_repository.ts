@@ -4,6 +4,9 @@ import { Address } from "../model/address.model";
 import { AddressMapper } from "../mapper/address.mapper";
 
 export class AddressRepository implements IRepository<AddressDTO> {
+    delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
     async findById(id: number): Promise<AddressDTO | null> {
         return Address.findByPk(id).then(address => AddressMapper.mapToDto(address))
@@ -17,12 +20,10 @@ export class AddressRepository implements IRepository<AddressDTO> {
         throw new Error("Method not implemented.");
     }
 
-    update(t: AddressDTO): Promise<AddressDTO> {
+    update(data: any, id: number): Promise<boolean | number> {
         throw new Error("Method not implemented.");
     }
 
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
+
 
 }
