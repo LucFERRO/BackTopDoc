@@ -63,7 +63,25 @@ doctorController.post('/',
 
 
 
-
+/**
+ * @openapi
+ * /api/doctors/{id}:
+ *  delete:
+ *      tags: [Doctors]
+ *      description: Delete a doctor
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1000001
+ *      responses:
+ *        200:
+ *          description: Delete.
+ */
+doctorController.delete('/:id',
+    // , authenticateToken
+    doctorHandler.deleteDoctor)
 
 
 

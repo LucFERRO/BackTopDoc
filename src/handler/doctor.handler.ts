@@ -47,6 +47,18 @@ export class DoctorHandler {
         }
     }
 
+    deleteDoctor = async (req: Request, res: Response) => {
+        const id = parseInt(req.params.id)
+
+        try {
+            const result = await this.doctorService.delete(id)
+            if (result) return res.status(200).json({message: 'Doctor successfully deleted.'})
+            return res.status(404).send()
+        } catch (err) {
+            return res.status(500).json({ message: 'Error in handler', err })
+        }
+    }
+
 }
 
 // export const doctorHandler = { getDoctors, getDoctorById, createDoctor }

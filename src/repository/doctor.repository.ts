@@ -6,17 +6,15 @@ import { DoctorMapper } from "../mapper/doctor.mapper";
 import { sequelize } from "../database/sequelize";
 
 export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, DoctorDTOFull> {
-
     async findById(id: number): Promise<DoctorDTO | null> {
         return Doctor.findByPk(id, { include: [Person] }).then(doctor => DoctorMapper.mapToDto(doctor))
     }
 
     async findAll(): Promise<DoctorDTO[]> {
-        // return Doctor.findAll({ include: [Person] }).then((doctors: Doctor[]) => doctors.map(doctor => DoctorMapper.mapToDtoTEST(doctor)))
-        return Doctor.findAll({ include: [Person] }).then((doctors: Doctor[]) => DoctorMapper.mapAllToDto(doctors))
+        return Doctor.findAll({ include: [Person] }).then((doctors: Doctor[]) => doctors.map( (doctor: Doctor) => DoctorMapper.mapToDto(doctor)))
     }
 
-    async create(doctorInfo: DoctorDTOFull): Promise<DoctorDTO | null | undefined> {
+    async create(doctorInfo: DoctorDTOFull): Promise<DoctorDTO | undefined> {
         const personInfo = {
             lastname: doctorInfo.lastname,
             firstname: doctorInfo.firstname,
@@ -48,12 +46,16 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
 
         } catch (error: any) {
             console.log(error)
-            return null
+            return null as any
         }
     }
-
-    delete(id: number): Promise<boolean> {
+    
+    update(t: DoctorDTOFull): Promise<DoctorDTO> {
         throw new Error("Method not implemented.");
+    }
+
+    delete(id: number): Promise<boolean | number> {
+       return Doctor.destroy({where: {doctor_id: id}}).then(good => good)
     }
 
 }

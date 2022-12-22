@@ -15,6 +15,10 @@ export class BanRepository implements IRepository<BanDTO> {
 
     create(t: BanDTO): Promise<BanDTO> {
         throw new Error("Method not implemented.");
+    }    
+
+    update(t: BanDTO): Promise<BanDTO> {
+        throw new Error("Method not implemented.");
     }
 
     delete(id: number): Promise<boolean> {

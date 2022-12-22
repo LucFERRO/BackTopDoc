@@ -17,6 +17,10 @@ export class BackgroundRepository implements IRepository<BackgroundDTO> {
         throw new Error("Method not implemented.");
     }
 
+    update(t: BackgroundDTO): Promise<BackgroundDTO> {
+        throw new Error("Method not implemented.");
+    }
+
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");
     }

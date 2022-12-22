@@ -25,7 +25,7 @@ export class DoctorService implements IService<DoctorDTO> {
         });
     }
 
-    async create(doctorRawInfo: DoctorDTO & Person): Promise<DoctorDTO | null | undefined> {
+    async create(doctorRawInfo: DoctorDTO & Person): Promise<DoctorDTO | undefined> {
         //bcrypt + bordel
 
         let hashedPassword = await bcrypt.hash(doctorRawInfo.password, 10);
@@ -46,8 +46,8 @@ export class DoctorService implements IService<DoctorDTO> {
         return this.doctorRepository.create(doctorInfo)
     }
 
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    delete(id: number): Promise<boolean | number> {
+        return this.doctorRepository.delete(id)
     }
 
 }

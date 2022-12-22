@@ -29,17 +29,17 @@ sequelize.authenticate()
     .catch((error: Error) => console.error(`Could not connect to database: ${error}`)
     )
 
-Person.hasOne(Doctor, { foreignKey: 'doctor_id' })
-Doctor.belongsTo(Person, { foreignKey: 'doctor_id' })
+Person.hasOne(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
+Doctor.belongsTo(Person, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 
-Person.hasOne(Patient, { foreignKey: 'patient_id' })
-Patient.belongsTo(Person, { foreignKey: 'patient_id' })
+Person.hasOne(Patient, { onDelete: 'cascade', foreignKey: 'patient_id' })
+Patient.belongsTo(Person, { onDelete: 'cascade', foreignKey: 'patient_id' })
 
-Doctor.hasMany(Appointement, { foreignKey: 'doctor_id' })
-Appointement.belongsTo(Doctor, { foreignKey: 'doctor_id' })
+Doctor.hasMany(Appointement, { onDelete: 'cascade', foreignKey: 'doctor_id' })
+Appointement.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 
-Patient.hasMany(Appointement, { foreignKey: 'patient_id' })
-Appointement.belongsTo(Patient, { foreignKey: 'patient_id' })
+Patient.hasMany(Appointement, { onDelete: 'cascade', foreignKey: 'patient_id' })
+Appointement.belongsTo(Patient, { onDelete: 'cascade', foreignKey: 'patient_id' })
 
 export const initDb = () => {
 

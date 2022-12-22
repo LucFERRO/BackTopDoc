@@ -16,6 +16,10 @@ export class PatientRepository implements IRepository<PatientDTO> {
     create(t: PatientDTO): Promise<PatientDTO> {
         throw new Error("Method not implemented.");
     }
+        
+    update(t: PatientDTO): Promise<PatientDTO> {
+        throw new Error("Method not implemented.");
+    }
 
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");

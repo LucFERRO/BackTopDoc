@@ -16,6 +16,10 @@ export class AppointementRepository implements IRepository<AppointementDTO> {
     create(t: AppointementDTO): Promise<AppointementDTO> {
         throw new Error("Method not implemented.");
     }
+        
+    update(t: AppointementDTO): Promise<AppointementDTO> {
+        throw new Error("Method not implemented.");
+    }
 
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");

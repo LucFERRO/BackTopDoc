@@ -16,6 +16,10 @@ export class PersonRepository implements IRepository<PersonDTO> {
     create(t: PersonDTO): Promise<PersonDTO> {
         throw new Error("Method not implemented.");
     }
+        
+    update(t: PersonDTO): Promise<PersonDTO> {
+        throw new Error("Method not implemented.");
+    }
 
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");

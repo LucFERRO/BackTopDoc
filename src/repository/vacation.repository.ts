@@ -16,6 +16,10 @@ export class VacationRepository implements IRepository<VacationDTO> {
     create(t: VacationDTO): Promise<VacationDTO> {
         throw new Error("Method not implemented.");
     }
+        
+    update(t: VacationDTO): Promise<VacationDTO> {
+        throw new Error("Method not implemented.");
+    }
 
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");

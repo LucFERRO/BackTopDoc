@@ -16,6 +16,10 @@ export class PlanningRepository implements IRepository<PlanningDTO> {
     create(t: PlanningDTO): Promise<PlanningDTO> {
         throw new Error("Method not implemented.");
     }
+        
+    update(t: PlanningDTO): Promise<PlanningDTO> {
+        throw new Error("Method not implemented.");
+    }
 
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");

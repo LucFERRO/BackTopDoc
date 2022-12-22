@@ -17,6 +17,10 @@ export class AddressRepository implements IRepository<AddressDTO> {
         throw new Error("Method not implemented.");
     }
 
+    update(t: AddressDTO): Promise<AddressDTO> {
+        throw new Error("Method not implemented.");
+    }
+
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");
     }

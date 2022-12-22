@@ -16,6 +16,10 @@ export class WorkdayRepository implements IRepository<WorkdayDTO> {
     create(t: WorkdayDTO): Promise<WorkdayDTO> {
         throw new Error("Method not implemented.");
     }
+        
+    update(t: WorkdayDTO): Promise<WorkdayDTO> {
+        throw new Error("Method not implemented.");
+    }
 
     delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");
