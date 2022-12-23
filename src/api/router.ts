@@ -13,7 +13,6 @@ router.use('/auth', authentificationController);
 router.use('/patients', patientController);
 router.use('/doctors', doctorController);
 
-router.use(({ res: ApiException }: any) => {
-    const message = 'Ressource not found.'
-    return ApiException.status(404).json({ message })
+router.use('*', (req, res) => {
+    return res.status(404).json({ message: 'Ressource not found.' })
 })

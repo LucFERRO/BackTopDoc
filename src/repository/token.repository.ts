@@ -14,8 +14,18 @@ export class TokenRepository implements IRepository<TokenDTO> {
         return Token.findAll().then((tokens: Token[]) => tokens)
     }
 
-    create(t: TokenDTO): Promise<TokenDTO> {
-        throw new Error("Method not implemented.");
+    async create(t: TokenDTO): Promise<TokenDTO> {
+
+        //TODDO
+        // Changer les 1 en HARD
+        const token = await Token.findOne({ where: { token_id: 1 } })
+        
+        if (token !== null) Token.destroy({ where: { token_id: 1 } })
+
+        return Token.create({
+            token_id: 1,
+            token: token.token
+        })
     }
 
     update(data: TokenDTO, id: number): Promise<number | boolean> {
