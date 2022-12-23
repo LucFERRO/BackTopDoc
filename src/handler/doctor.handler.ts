@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { sequelize } from "../database/sequelize";
 import { IService } from "../core/service.interface";
 import { DoctorDTO } from "../dto/doctor.dto";
-const bcrypt = require("bcrypt");
 
 export class DoctorHandler {
 
@@ -16,7 +14,6 @@ export class DoctorHandler {
         try {
             const result = await this.doctorService.findAll();
             res.status(200).json(result)
-
         } catch (err) {
             res.status(500).json(err)
         }

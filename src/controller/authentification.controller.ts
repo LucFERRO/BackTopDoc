@@ -1,8 +1,8 @@
 const { Router } = require('express')
 
-import { handlerAuthentification } from '../handler/authentification.handler'
+import { authentificationHandler } from "../core/initialisation";
 
-export const authentificationRouter = Router();
+export const authentificationController = Router();
 
 /**
  * @swagger
@@ -24,12 +24,12 @@ export const authentificationRouter = Router();
  *         in: body
  *         required: true
  *         type: object
- *         default: {"mail": "remy@c.fr", "password": "1234"}
+ *         default: {"mail": "luc@f.fr", "password": "1234"}
  *      responses:
  *        200:
  *          description: Login. Returns tokens if successful login.
  */
-authentificationRouter.post('/login', handlerAuthentification.login)
+authentificationController.post('/login', authentificationHandler.login)
 
 /**
  * @openapi
@@ -44,9 +44,9 @@ authentificationRouter.post('/login', handlerAuthentification.login)
  *         in: body
  *         required: true
  *         type: object
- *         default: {"token": "string"}
+ *         default: {"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0bmFtZSI6IkZFUlJPIiwiZmlyc3RuYW1lIjoiTHVjIiwiaWF0IjoxNjcxODA1MTY1LCJleHAiOjE2NzQzOTcxNjV9.3jMVk9CrZqwefFQqllf7Fc5MNwGeifuBzahEIA2C2es"}
  *      responses:
  *        200:
  *          description: Token. Refresh tokens.
  */
-authentificationRouter.post('/refresh', handlerAuthentification.refreshToken)
+authentificationController.post('/refresh', authentificationHandler.refreshToken)

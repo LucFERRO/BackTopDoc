@@ -10,11 +10,8 @@ export class TokenMapper {
     }
 
     static mapAllToDto(tokens: Token[]): TokenDTO[] {
-        return tokens.map(token => {
-            return  {
-                token: token.token,
-            }
-        })
+        return tokens.map(token => token)
     }
+
 
 }

@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { sequelize } from "../database/sequelize";
 import { IService } from "../core/service.interface";
 import { PatientDTO } from "../dto/patient.dto";
-const bcrypt = require("bcrypt");
 
 export class PatientHandler {
 

@@ -14,3 +14,8 @@ export interface IRepositoryInheritance<T, D> {
     update(t: Partial<D>, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }
+
+export interface AuthIRepository<T> {
+    login(t:T): Promise<T>;
+    refreshToken(t:T): Promise<T>
+}

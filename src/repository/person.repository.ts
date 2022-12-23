@@ -4,12 +4,6 @@ import { Person } from "../model/person.model";
 import { PersonMapper } from "../mapper/person.mapper";
 
 export class PersonRepository implements IRepository<PersonDTO> {
-    update(data: PersonDTO, id: number): Promise<number | boolean> {
-        throw new Error("Method not implemented.");
-    }
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
 
     async findById(id: number): Promise<PersonDTO | null> {
         return Person.findByPk(id).then((person : Person | null ) => PersonMapper.mapToDto(person))
@@ -18,11 +12,16 @@ export class PersonRepository implements IRepository<PersonDTO> {
     async findAll(): Promise<PersonDTO[]> {
         return Person.findAll().then((persons: Person[]) => PersonMapper.mapAllToDto(persons))
     }
-
-    create(t: PersonDTO): Promise<PersonDTO> {
+    
+    async create(t: PersonDTO): Promise<PersonDTO> {
         throw new Error("Method not implemented.");
     }
         
-
+    async update(data: PersonDTO, id: number): Promise<number | boolean> {
+        throw new Error("Method not implemented.");
+    }
+    async delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
 }
