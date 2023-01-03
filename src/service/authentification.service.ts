@@ -1,5 +1,5 @@
 import { AuthentificationDTO } from "../dto/authentification.dto";
-import { AuthIRepository, IRepository } from "../core/respository.interface";
+import { IRepository } from "../core/respository.interface";
 import { AuthIService } from "../core/service.interface";
 import { Person } from "../model/person.model";
 import { PersonDTO, PersonDTOFull } from "../dto/person.dto";
@@ -11,15 +11,86 @@ import jwt from "jsonwebtoken"
 
 export class AuthentificationService implements AuthIService<AuthentificationDTO, TokenDTO> {
 
-    private authentificationRepository: AuthIRepository<AuthentificationDTO>;
     private tokenRepository: IRepository<TokenDTO>
 
-    constructor(_authentificationRepository: AuthIRepository<AuthentificationDTO>, _tokenRepository: IRepository<TokenDTO>) {
-        this.authentificationRepository = _authentificationRepository;
+    constructor(_tokenRepository: IRepository<TokenDTO>) {
         this.tokenRepository = _tokenRepository;
     }
     async login(t: AuthentificationDTO): Promise<any> {
-        throw new Error("Method not implemented.");
+
+        try {
+
+            
+
+            // const user = await User.findOne({ where: { mail: req.body.mail } })
+
+            // let message: string = "";
+        
+            // if (user == null) {
+            //     message = "Aucun utilisateur ne correspond à ce mail.";
+            //     return res.status(400).json({ userFound: false, message: message });
+            // }
+        
+            // if (!await bcrypt.compare(req.body.password, user.password)) {
+            //     message = "Identifiants incorrects.";
+            //     return res.status(401).json({ successfullLogin: false, message: message });
+            // } else {
+            //     const accessToken = jwt.sign(
+            //         { id: user.user_id, name: user.mail, role: user.role },
+            //         process.env.ACCESS_TOKEN_SECRET,
+            //         { expiresIn: "3600s" }
+            //     );
+            //     const refreshToken = jwt.sign(
+            //         { id: user.user_id, name: user.mail, role: user.role },
+            //         process.env.REFRESH_TOKEN_SECRET
+            //     );
+        
+            //     const token = await Token.findOne({ where: { user_id: user.user_id } })
+        
+            //     if (token !== null) Token.destroy({ where: { user_id: user.user_id } })
+        
+            //     Token.create({
+            //         user_id: user.user_id,
+            //         refreshToken: refreshToken
+            //     })
+        
+            //     return res.status(200).json(DTO_login({ accessToken: accessToken, refreshToken: refreshToken, user: user }))
+            // }
+
+
+
+            // if (!await bcrypt.compare(req.body.password, person.password)) {
+            //     return res.status(401).json({ message: 'Wrong credentials.' });
+            // } else {
+            //     const accessToken = jwt.sign(
+            //         { id: person.person_id, name: person.mail },
+            //         process.env.ACCESS_TOKEN_SECRET,
+            //         { expiresIn: "3600s" }
+            //     );
+            //     const refreshToken = jwt.sign(
+            //         { id: person.person_id, name: person.mail },
+            //         process.env.REFRESH_TOKEN_SECRET
+            //     );
+        
+            //     // const token = await Token.findOne({ where: { person_id: person.person_id } })
+        
+            //     // if (token !== null) Token.destroy({ where: { person_id: person.person_id } })
+        
+            //     // Token.create({
+            //     //     person_id: person.person_id,
+            //     //     token: token
+            //     // })
+        
+            //     return res.status(200).json({ accessToken: accessToken, token: token })
+            // }
+
+
+
+
+    
+        } catch(err) {
+            throw err
+        }
     }
 
     async refreshToken(token: TokenDTO): Promise<TokenDTO> {
@@ -36,7 +107,7 @@ export class AuthentificationService implements AuthIService<AuthentificationDTO
                 refreshTokens.push(token.token)
             })
 
-            if (!refreshTokens.includes(token.token)) throw new Error
+            if (!refreshTokens.includes(token.token)) throw new Error('Forbidden')
 
             const decoded = jwt.verify(token.token, process.env.REFRESH_TOKEN_SECRET!) as Payload
 
@@ -44,8 +115,9 @@ export class AuthentificationService implements AuthIService<AuthentificationDTO
 
             return { token: accessToken }
 
-        } catch (error) {
-            throw error
+        } catch (err) {
+            console.log('service', err)
+            throw err
         }
 
     }

@@ -11,7 +11,7 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO, Docto
         return Doctor.findByPk(id, { include: [Person] }).then(doctor => DoctorMapper.mapToDto(doctor))
     }
 
-    async findAll(): Promise<DoctorDTO[]> {
+    async findAll(options? : any): Promise<DoctorDTO[]> {
         return Doctor.findAll({ include: [Person] }).then((doctors: Doctor[]) => doctors.map((doctor: Doctor) => DoctorMapper.mapToDto(doctor)))
     }
 

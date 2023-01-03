@@ -17,10 +17,7 @@ export class DoctorService implements IService<DoctorDTO> {
     }
 
     async findById(id: number): Promise<DoctorDTO | null> {
-        return this.doctorRepository.findById(id).then(doctorDto => {
-            if (doctorDto === null) return null;
-            return doctorDto;
-        });
+        return this.doctorRepository.findById(id)
     }
 
     async create(doctorRawInfo: DoctorDTO & Person): Promise<DoctorDTO | undefined> {

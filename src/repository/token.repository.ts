@@ -18,13 +18,13 @@ export class TokenRepository implements IRepository<TokenDTO> {
 
         //TODDO
         // Changer les 1 en HARD
-        const token = await Token.findOne({ where: { token_id: 1 } })
+        const token = await Token.findOne({ where: { token_id: 5 } })
         
-        if (token !== null) Token.destroy({ where: { token_id: 1 } })
+        if (token !== null) Token.destroy({ where: { token_id: 5 } })
 
         return Token.create({
-            token_id: 1,
-            token: token.token
+            // token_id: 1,
+            token: t.token
         })
     }
 

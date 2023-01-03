@@ -6,7 +6,11 @@ export interface IService<T> {
     delete(id: number): Promise<boolean | number>;
 }
 
+export interface PersonIService<T> {
+    findByMail(mail: string): Promise<T | null>;
+}
+
 export interface AuthIService<D,T> {
-    login(t:D): Promise<D>;
+    login(d:D): Promise<D>;
     refreshToken(t:T): Promise<T>
 }
