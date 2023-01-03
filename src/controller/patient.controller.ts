@@ -31,6 +31,12 @@ patientController.get('/', patientHandler.getPatients)
  *   get:
  *      tags: [Patients]
  *      description: Get patient by id.
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1000000
  *      responses:
  *        200:
  *          description: Get by id.

@@ -31,6 +31,12 @@ doctorController.get('/', doctorHandler.getDoctors)
  *   get:
  *      tags: [Doctors]
  *      description: Get doctor by id.
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1000001
  *      responses:
  *        200:
  *          description: Get by id.
