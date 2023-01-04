@@ -14,13 +14,19 @@ export interface IRepositoryInheritance<T, D> {
     delete(id: number): Promise<boolean | number>;
 }
 
-
-
-export interface IRepositoryPerson<T> {
-    findByMail(mail: string): Promise<T | null>;
-}
-
 export interface AuthIRepository<T> {
     login(t:T): Promise<T>;
     refreshToken(t:T): Promise<T>
+}
+
+
+
+export interface IRepositoryToken<T> {
+    findAll(): Promise<T[]>;
+    create(t: T, person_id: number): Promise<Partial<T> | undefined>;
+    delete(id: number): Promise<boolean | number>;
+}
+
+export interface IRepositoryPerson<T> {
+    findByMail(mail: string): Promise<T | null>;
 }

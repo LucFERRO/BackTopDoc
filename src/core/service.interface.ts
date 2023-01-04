@@ -12,5 +12,5 @@ export interface PersonIService<T> {
 
 export interface AuthIService<D,T> {
     login(d:D): Promise<D>;
-    refreshToken(t:T): Promise<T>
+    refreshToken(t:T): Promise<Partial<T>>
 }

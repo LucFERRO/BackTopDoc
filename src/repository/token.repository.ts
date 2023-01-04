@@ -1,12 +1,11 @@
-import { IRepository } from "../core/respository.interface";
+import { IRepositoryToken } from "../core/respository.interface";
 import { TokenDTO } from "../dto/token.dto";
 import { Token } from "../model/token.model";
-import { TokenMapper } from "../mapper/token.mapper";
 
-export class TokenRepository implements IRepository<TokenDTO> {
+export class TokenRepository implements IRepositoryToken<TokenDTO> {
 
     async findById(id: number): Promise<TokenDTO | null> {
-        return Token.findByPk(id).then(token => TokenMapper.mapToDto(token))
+        return Token.findByPk(id).then(token => token)
     }
 
     async findAll(): Promise<any> {
@@ -14,16 +13,14 @@ export class TokenRepository implements IRepository<TokenDTO> {
         return Token.findAll().then((tokens: Token[]) => tokens)
     }
 
-    async create(t: TokenDTO): Promise<TokenDTO> {
+    async create(t: Partial<TokenDTO>, id: number): Promise<Partial<TokenDTO>> {
 
-        //TODDO
-        // Changer les 1 en HARD
-        const token = await Token.findOne({ where: { token_id: 5 } })
-        
-        if (token !== null) Token.destroy({ where: { token_id: 5 } })
+        //TODDO Pas ici?
+        const token = await Token.findOne({ where: { person_id: id } })
+        if (token !== null) Token.destroy({ where: { person_id: id } })
 
         return Token.create({
-            // token_id: 1,
+            person_id: id,
             token: t.token
         })
     }

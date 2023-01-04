@@ -17,4 +17,4 @@ import { TokenRepository } from "../repository/token.repository";
 export const doctorHandler = new DoctorHandler(new DoctorService(new DoctorRepository));
 export const patientHandler = new PatientHandler(new PatientService(new PatientRepository));
 export const personHandler = new PersonHandler(new PersonService(new PersonRepository));
-export const authentificationHandler = new AuthentificationHandler(new AuthentificationService(new TokenRepository));
+export const authentificationHandler = new AuthentificationHandler(new AuthentificationService(new TokenRepository, new PersonRepository));

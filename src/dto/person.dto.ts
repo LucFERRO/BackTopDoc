@@ -4,5 +4,6 @@ export interface PersonDTO {
 }
 
 export interface PersonDTOFull extends PersonDTO {
+    person_id: number,
     password: string
 }

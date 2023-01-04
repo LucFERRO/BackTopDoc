@@ -5,6 +5,7 @@ import { concatRequiredMessage } from "../core/methods"
 export class Token extends Model {
     token_id!: number
     token!: string
+    person_id!: number
 }
 
 Token.init({
@@ -21,6 +22,14 @@ Token.init({
             notEmpty: { msg: concatRequiredMessage('Token') }
         }
     },
+    person_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notNull: { msg: concatRequiredMessage('person_id') },
+            notEmpty: { msg: concatRequiredMessage('person_id') }
+        }
+    }
 },
     {
         sequelize,

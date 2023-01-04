@@ -97,8 +97,8 @@ export const initDb = () => {
 
         tokens.map(token => {
             Token.create({
-                token_id: token.token_id,
-                token: token.token
+                token: token.token,
+                person_id: token.person_id
             }).then((response: { toJSON: () => string }) => console.log('Token', response.toJSON()))
         })
         bans.map(ban => {

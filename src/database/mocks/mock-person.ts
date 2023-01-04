@@ -23,8 +23,8 @@ export const persons = [
     },
     {
         person_id: 1000002,
-        lastname: 'Remy',
-        firstname: 'SinTo',
+        lastname: 'SinTo',
+        firstname: 'Remy',
         mail: 'remy@c.fr',
         password: '$2b$10$6ntskVqohGuZOXkdwvyz1.iXi8MeWEG2MIbWoz4aEvgByyJEbM7Pe',
         birthdate: '05-15-1997',
