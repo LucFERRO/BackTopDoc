@@ -5,6 +5,7 @@ import { Person } from "../model/person.model";
 export class DoctorMapper {
     static mapToDto(doctor: Doctor | null): DoctorDTO {
         if (doctor === null) return null as any;
+        console.log(doctor)
         return {
             activity: doctor.activity,
             lastname: doctor.get({ plain: true }).Person.lastname,

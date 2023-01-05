@@ -1,5 +1,5 @@
 import { Doctor } from "../../model/doctor.model";
-import { DoctorDTO, DoctorDTOFull } from "../../dto/doctor.dto";
+// import { DoctorDTO, DoctorDTOFull } from "../../dto/doctor.dto";
 import { DoctorRepository } from "../../repository/doctor.repository";
 
 // import User from "../../database/connect";
