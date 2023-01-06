@@ -2,7 +2,6 @@ import { AuthentificationDTO } from "../dto/authentification.dto";
 import { IRepositoryToken, IRepositoryPerson } from "../core/respository.interface";
 import { AuthIService } from "../core/service.interface";
 
-import { Token } from "../model/token.model";
 import { TokenDTO } from "../dto/token.dto";
 import { Payload } from "../dto/token.dto";
 import bcrypt from "bcrypt";
@@ -10,10 +9,10 @@ import jwt from "jsonwebtoken"
 
 export class AuthentificationService implements AuthIService<AuthentificationDTO, TokenDTO> {
 
-    private tokenRepository: IRepositoryToken<Partial<TokenDTO>>
+    private tokenRepository: IRepositoryToken
     private personRepository: IRepositoryPerson
 
-    constructor(_tokenRepository: IRepositoryToken<Partial<TokenDTO>>, _personRepository: IRepositoryPerson) {
+    constructor(_tokenRepository: IRepositoryToken, _personRepository: IRepositoryPerson) {
         this.tokenRepository = _tokenRepository;
         this.personRepository = _personRepository;
     }
@@ -62,7 +61,7 @@ export class AuthentificationService implements AuthIService<AuthentificationDTO
         }
     }
 
-    async refreshToken(token: TokenDTO): Promise<Partial<TokenDTO>> {
+    async refreshToken(token: TokenDTO): Promise<TokenDTO> {
         // Generate new refresh tokens
         // const test = jwt.sign({ id: 1000002, lastname: 'SinTo', firstname: 'Remy' }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: "30d" })
         // console.log(test)

@@ -2,7 +2,7 @@ import { IRepositoryToken } from "../core/respository.interface";
 import { TokenDTO } from "../dto/token.dto";
 import { Token } from "../model/token.model";
 
-export class TokenRepository implements IRepositoryToken<TokenDTO> {
+export class TokenRepository implements IRepositoryToken {
 
     async findById(id: number): Promise<TokenDTO | null> {
         return Token.findByPk(id).then(token => token)
@@ -13,7 +13,7 @@ export class TokenRepository implements IRepositoryToken<TokenDTO> {
         return Token.findAll().then((tokens: Token[]) => tokens)
     }
 
-    async create(t: Partial<TokenDTO>, id: number): Promise<Partial<TokenDTO>> {
+    async create(t: TokenDTO, id: number): Promise<TokenDTO> {
 
         //TODDO Pas ici?
         const token = await Token.findOne({ where: { person_id: id } })

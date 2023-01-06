@@ -1,5 +1,5 @@
 export interface TokenDTO {
-    token_id: number,
+    token_id?: number,
     token: string,
     person_id: number,
 }

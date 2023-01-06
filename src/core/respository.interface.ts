@@ -1,4 +1,5 @@
 import { PersonDTOFull } from "../dto/person.dto";
+import { TokenDTO } from "../dto/token.dto";
 
 export interface IRepository<T> {
     findAll(): Promise<T[]>;
@@ -20,9 +21,9 @@ export interface IRepositoryPerson {
     findByMail(mail: string): Promise<PersonDTOFull | null>;
 }
 
-export interface IRepositoryToken<T> {
-    findAll(): Promise<T[]>;
-    create(t: T, person_id: number): Promise<Partial<T> | undefined>;
+export interface IRepositoryToken {
+    findAll(): Promise<TokenDTO[]>;
+    create(t: TokenDTO, person_id: number): Promise<TokenDTO | undefined>;
     delete(id: number): Promise<boolean | number>;
 }
 
