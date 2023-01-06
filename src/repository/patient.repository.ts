@@ -1,11 +1,11 @@
-import { IRepository, IRepositoryInheritance } from "../core/respository.interface";
-import { PatientDTO, PatientDTOFull } from "../dto/patient.dto";
+import { IRepositoryInheritance } from "../core/respository.interface";
+import { PatientDTO } from "../dto/patient.dto";
 import { Patient } from "../model/patient.model";
 import { Person } from "../model/person.model";
 import { PatientMapper } from "../mapper/patient.mapper";
 import { sequelize } from "../database/sequelize";
 
-export class PatientRepository implements IRepositoryInheritance<PatientDTO, PatientDTOFull> {
+export class PatientRepository implements IRepositoryInheritance<PatientDTO> {
 
     async findById(id: number): Promise<PatientDTO | null> {
         return Patient.findByPk(id, { include: [Person] }).then(patient => PatientMapper.mapToDto(patient))
@@ -15,7 +15,7 @@ export class PatientRepository implements IRepositoryInheritance<PatientDTO, Pat
         return Patient.findAll({ include: [Person] }).then((patients: Patient[]) => patients.map((patient: Patient) => PatientMapper.mapToDto(patient)))
     }
 
-    async create(data: PatientDTOFull): Promise<PatientDTO> {
+    async create(data: PatientDTO): Promise<PatientDTO> {
 
         const personInfo = {
             secu_number: data.secu_number,
@@ -54,7 +54,7 @@ export class PatientRepository implements IRepositoryInheritance<PatientDTO, Pat
         }
     }
 
-    async update(data: PatientDTOFull, id: number): Promise<boolean | number> {
+    async update(data: PatientDTO, id: number): Promise<boolean | number> {
 
         const personInfo = {
             lastname: data.lastname,

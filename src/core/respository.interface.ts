@@ -1,3 +1,4 @@
+//Pas besoin ?
 import { PersonDTOFull } from "../dto/person.dto";
 import { TokenDTO } from "../dto/token.dto";
 
@@ -9,11 +10,11 @@ export interface IRepository<T> {
     delete(id: number): Promise<boolean >;
 }
 
-export interface IRepositoryInheritance<T, D> {
+export interface IRepositoryInheritance<T> {
     findAll(options?: any): Promise<T[]>;
     findById(id: number): Promise<T | null>;
-    create(t: D): Promise<T | undefined>;
-    update(t: Partial<D>, id: number): Promise<boolean | number | undefined>;
+    create(t: T): Promise<T | undefined>;
+    update(t: T, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }
 

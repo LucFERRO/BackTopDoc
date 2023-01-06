@@ -1,4 +1,4 @@
-import { PatientDTO, PatientDTOFull } from "../dto/patient.dto";
+import { PatientDTO } from "../dto/patient.dto";
 import { IRepositoryInheritance } from "../core/respository.interface";
 import { IService } from "../core/service.interface";
 import { Person } from "../model/person.model";
@@ -6,9 +6,9 @@ const bcrypt = require("bcrypt");
 
 export class PatientService implements IService<PatientDTO> {
 
-    private patientRepository: IRepositoryInheritance<PatientDTO, PatientDTOFull>;
+    private patientRepository: IRepositoryInheritance<PatientDTO>;
 
-    constructor(_patientRepository: IRepositoryInheritance<PatientDTO, PatientDTOFull>) {
+    constructor(_patientRepository: IRepositoryInheritance<PatientDTO>) {
         this.patientRepository = _patientRepository;
     }
 
@@ -26,7 +26,7 @@ export class PatientService implements IService<PatientDTO> {
     async create(patientRawInfo: PatientDTO & Person): Promise<PatientDTO | undefined> {
         let hashedPassword = await bcrypt.hash(patientRawInfo.password, 10);
 
-        let patientInfo: PatientDTOFull = {
+        let patientInfo: PatientDTO = {
             secu_number: patientRawInfo.secu_number,
             lastname: patientRawInfo.lastname,
             firstname: patientRawInfo.firstname,
@@ -46,7 +46,7 @@ export class PatientService implements IService<PatientDTO> {
         let hashedPassword
         if (data.password) hashedPassword = await bcrypt.hash(data.password, 10)
 
-        let patientInfo: Partial<PatientDTOFull> = {
+        let patientInfo: PatientDTO = {
             secu_number: data.secu_number,
             lastname: data.lastname,
             firstname: data.firstname,
