@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import { PersonIService } from "../core/service.interface";
-import { PersonDTO } from "../dto/person.dto";
 
 export class PersonHandler {
 
-    private personService: PersonIService<PersonDTO>
+    private personService: PersonIService
 
-    constructor(service: PersonIService<PersonDTO>) {
+    constructor(service: PersonIService) {
         this.personService = service
     }
 

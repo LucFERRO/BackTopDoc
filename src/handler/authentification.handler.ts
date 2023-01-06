@@ -16,15 +16,15 @@ export class AuthentificationHandler {
     login = async (req: Request, res: Response) => {
 
         try {
-
-            const result = await this.authentificationService.login(req.body)
+            const { mail, password } = req.body
+            const result = await this.authentificationService.login({ mail, password })
 
             if (!result) {
                 return res.status(404).json({ message: 'Mail not in database.' });
             }
             res.status(200).json(result)
 
-        } catch (err : any) {
+        } catch (err: any) {
             res.status(401).json(err.message)
         }
 

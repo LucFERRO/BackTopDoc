@@ -1,8 +1,7 @@
 import { AuthentificationDTO } from "../dto/authentification.dto";
 import { IRepositoryToken, IRepositoryPerson } from "../core/respository.interface";
 import { AuthIService } from "../core/service.interface";
-import { Person } from "../model/person.model";
-import { PersonDTOFull } from "../dto/person.dto";
+
 import { Token } from "../model/token.model";
 import { TokenDTO } from "../dto/token.dto";
 import { Payload } from "../dto/token.dto";
@@ -12,9 +11,9 @@ import jwt from "jsonwebtoken"
 export class AuthentificationService implements AuthIService<AuthentificationDTO, TokenDTO> {
 
     private tokenRepository: IRepositoryToken<Partial<TokenDTO>>
-    private personRepository: IRepositoryPerson<Partial<PersonDTOFull>>
+    private personRepository: IRepositoryPerson
 
-    constructor(_tokenRepository: IRepositoryToken<Partial<TokenDTO>>, _personRepository: IRepositoryPerson<Partial<PersonDTOFull>>) {
+    constructor(_tokenRepository: IRepositoryToken<Partial<TokenDTO>>, _personRepository: IRepositoryPerson) {
         this.tokenRepository = _tokenRepository;
         this.personRepository = _personRepository;
     }
@@ -55,7 +54,7 @@ export class AuthentificationService implements AuthIService<AuthentificationDTO
             },
             user.person_id!)
 
-            return { refreshToken, accessToken }
+            return { refreshToken , accessToken }
             // res.status(200).json(DTO_login({ accessToken: accessToken, refreshToken: refreshToken, user: user }))
 
         } catch (err) {

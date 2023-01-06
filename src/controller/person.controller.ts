@@ -28,4 +28,3 @@ export const personController = Router();
  *          description: Get person of given mail.
  */
 personController.get('/', personHandler.getPersonByMail)
-

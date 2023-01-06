@@ -35,6 +35,16 @@ Doctor.belongsTo(Person, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 Person.hasOne(Patient, { onDelete: 'cascade', foreignKey: 'patient_id' })
 Patient.belongsTo(Person, { onDelete: 'cascade', foreignKey: 'patient_id' })
 
+
+
+Doctor.hasMany(Planning, { onDelete: 'cascade', foreignKey: 'doctor_id' })
+Planning.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
+
+Planning.hasMany(Workday, { onDelete: 'cascade', foreignKey: 'planning_id' })
+Workday.belongsTo(Planning, { onDelete: 'cascade', foreignKey: 'planning_id' })
+
+
+
 Doctor.hasMany(Appointement, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 Appointement.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 
@@ -76,8 +86,34 @@ export const initDb = () => {
                         }).then((response: { toJSON: () => string }) => {
                             console.log('Doctor', response.toJSON())
 
+                            plannings.map(planning => {
+                                // TODO : Cadencement ?
+                                if (doctor.doctor_id == planning.doctor_id) {
+                                    Planning.create({
+                                        planning_id: planning.planning_id,
+                                        doctor_id: planning.doctor_id,
+                                        planning_name: planning.planning_name,
+                                        planning_start: planning.planning_start,
+                                        planning_end: planning.planning_end,
+                                    }).then((response: { toJSON: () => string }) => {
+                                        console.log('Planning', response.toJSON())
+                                        workdays.map(workday => {
+                                            if (planning.planning_id == workday.planning_id) {
+                                                Workday.create({
+                                                    planning_id: workday.planning_id,
+                                                    workday_number: workday.workday_number,
+                                                    workday_start: workday.workday_start,
+                                                    workday_end: workday.workday_end,
+                                                    slot_duration_minutes: workday.slot_duration_minutes
+                                                }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
+                                            }
+                                        })
+                                    })
+                                }
+                            })
+
                             appointements.map((appointement) => {
-                                
+
                                 // TODO : Cadencement ?
                                 if (doctor.doctor_id == appointement.doctor_id) {
                                     Appointement.create({
@@ -124,31 +160,12 @@ export const initDb = () => {
             }).then((response: { toJSON: () => string }) => console.log('Background', response.toJSON()))
         })
 
-        plannings.map(planning => {
-            Planning.create({
-                planning_id: planning.planning_id,
-                planning_name: planning.planning_name,
-                planning_start: planning.planning_start,
-                planning_end: planning.planning_end,
-            }).then((response: { toJSON: () => string }) => console.log('Planning', response.toJSON()))
-        })
-
         vacations.map(vacation => {
             Vacation.create({
                 vacation_id: vacation.vacation_id,
                 vacation_start: vacation.vacation_start,
                 vacation_end: vacation.vacation_end,
             }).then((response: { toJSON: () => string }) => console.log('Vacation', response.toJSON()))
-        })
-
-        workdays.map(workday => {
-            Workday.create({
-                workday_id: workday.workday_id,
-                workday_number: workday.workday_number,
-                workday_start: workday.workday_start,
-                workday_end: workday.workday_end,
-                slot_duration_minutes: workday.slot_duration_minutes
-            }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
         })
 
         console.log('Database successfully initialized.')

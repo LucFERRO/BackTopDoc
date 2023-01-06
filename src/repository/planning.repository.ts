@@ -1,28 +1,22 @@
-import { IRepository } from "../core/respository.interface";
-import { PlanningDTO } from "../dto/planning.dto";
+import { IRepositoryPlanning } from "../core/respository.interface";
 import { Planning } from "../model/planning.model";
-import { PlanningMapper } from "../mapper/planning.mapper";
+import { Workday } from "../model/workday.model";
 
-export class PlanningRepository implements IRepository<PlanningDTO> {
-    update(data: PlanningDTO, id: number): Promise<number | boolean> {
-        throw new Error("Method not implemented.");
-    }
-    delete(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+export class PlanningRepository implements IRepositoryPlanning<Planning> {
+
+    async findAllOfGivenDoctor(doctor_id: number): Promise<Planning[]> {
+        return Planning.findAll({ where: { doctor_id: doctor_id }, include: [Workday] }).then((plannings: Planning[]) => plannings)
     }
 
-    async findById(id: number): Promise<PlanningDTO | null> {
-        return Planning.findByPk(id).then(planning => PlanningMapper.mapToDto(planning))
-    }
-
-    async findAll(): Promise<PlanningDTO[]> {
+    async create(data: Planning & Workday, doctor_id: number): Promise<Planning> {
         throw new Error("Method not implemented.");
     }
 
-    create(t: PlanningDTO): Promise<PlanningDTO> {
+    async update(data: Planning & Workday, id: number): Promise<number | boolean> {
         throw new Error("Method not implemented.");
     }
-        
-
+    async delete(id: number): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
 
 }

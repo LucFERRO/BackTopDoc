@@ -4,6 +4,7 @@ import { concatRequiredMessage } from "../core/methods"
 
 export class Planning extends Model {
     planning_id!: number
+    doctor_id!: number
     planning_name!: string
     planning_start!: Date
     planning_end!: Date

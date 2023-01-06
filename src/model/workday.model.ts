@@ -4,6 +4,7 @@ import { concatRequiredMessage } from "../core/methods"
 
 export class Workday extends Model {
     workday_id!: number
+    planning_id!: number
     workday_number!: number
     workday_start!: Date
     workday_end!: Date
