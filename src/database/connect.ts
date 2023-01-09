@@ -90,7 +90,7 @@ export const initDb = () => {
                                 // TODO : Cadencement ?
                                 if (doctor.doctor_id == planning.doctor_id) {
                                     Planning.create({
-                                        planning_id: planning.planning_id,
+                                        // planning_id: planning.planning_id,
                                         doctor_id: planning.doctor_id,
                                         planning_name: planning.planning_name,
                                         planning_start: planning.planning_start,
@@ -98,7 +98,6 @@ export const initDb = () => {
                                     }).then((response: { toJSON: () => string }) => {
                                         console.log('Planning', response.toJSON())
                                         workdays.map(workday => {
-                                            if (planning.planning_id == workday.planning_id) {
                                                 Workday.create({
                                                     planning_id: workday.planning_id,
                                                     workday_number: workday.workday_number,
@@ -106,7 +105,6 @@ export const initDb = () => {
                                                     workday_end: workday.workday_end,
                                                     slot_duration_minutes: workday.slot_duration_minutes
                                                 }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
-                                            }
                                         })
                                     })
                                 }

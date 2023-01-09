@@ -1,6 +1,8 @@
 //Pas besoin ?
 import { PersonDTOFull } from "../dto/person.dto";
+import { PlanningDTO } from "../dto/planning.dto";
 import { TokenDTO } from "../dto/token.dto";
+import { WorkdayDTO } from "../dto/workday.dto";
 
 export interface IRepository<T> {
     findAll(): Promise<T[]>;
@@ -28,9 +30,9 @@ export interface IRepositoryToken {
     delete(id: number): Promise<boolean | number>;
 }
 
-export interface IRepositoryPlanning<T> {
-    findAllOfGivenDoctor(doctor_id: number): Promise<T[]>;
-    create(data: T, doctor_id: number): Promise<T>;
-    update(t: Partial<T>, id: number): Promise<boolean | number | undefined>;
+export interface IRepositoryPlanning {
+    findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
+    create(planningData: PlanningDTO, workdaysInfo: WorkdayDTO[]): Promise<PlanningDTO>;
+    update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

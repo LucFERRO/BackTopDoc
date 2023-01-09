@@ -1,5 +1,6 @@
 import { PersonDTOFull } from "../dto/person.dto";
 import { PlanningDTO } from "../dto/planning.dto";
+import { WorkdayDTO } from "../dto/workday.dto";
 
 export interface IService<T> {
     findAll(): Promise<T[]>;
@@ -15,12 +16,12 @@ export interface PersonIService {
 
 export interface AuthIService<D,T> {
     login(d:D): Promise<D>;
-    refreshToken(t:T): Promise<Partial<T>>
+    refreshToken(t:T): Promise<T>
 }
 
 export interface PlanningIService {
-    create(data: PlanningDTO, doctor_id: number): Promise<PlanningDTO>;
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
-    update(t: Partial<PlanningDTO>, id: number): Promise<boolean | number | undefined>;
+    create(planningData: PlanningDTO, workdaysData: WorkdayDTO[]): Promise<PlanningDTO>;
+    update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

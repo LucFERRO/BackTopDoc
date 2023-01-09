@@ -54,7 +54,6 @@ export class AuthentificationService implements AuthIService<AuthentificationDTO
             user.person_id!)
 
             return { refreshToken , accessToken }
-            // res.status(200).json(DTO_login({ accessToken: accessToken, refreshToken: refreshToken, user: user }))
 
         } catch (err) {
             throw err

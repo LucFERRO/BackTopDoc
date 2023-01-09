@@ -31,5 +31,11 @@ const swaggerOptions = {
     apis: [`./src/controller/*.controller.ts`]
 }
 
+const swaggerOptions2 = {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: "TopDoc API",
+    // customfavIcon: "/assets/favicon.ico"
+}
+
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
-swaggerRouter.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+swaggerRouter.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs,swaggerOptions2))
