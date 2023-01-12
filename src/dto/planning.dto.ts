@@ -5,5 +5,5 @@ export interface PlanningDTO {
     planning_start: Date,
     planning_end: Date,
     doctor_id: number,
-    WorkdaysInfo?: WorkdayDTO[]
+    workdays?: WorkdayDTO[]
 }

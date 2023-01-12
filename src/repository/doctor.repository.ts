@@ -46,6 +46,15 @@ export class DoctorRepository implements IRepositoryInheritance<DoctorDTO> {
                     .then((doctor: Doctor) => DoctorMapper.mapToDtoCreate(doctor, newPerson))
             })
 
+            // Marche mais relou faut changer le retour en personDTO
+            // const newPerson = await Person.create({
+            //     ...personInfo,
+            //     doctor: doctorInfo
+            // }, {
+            //     include: 'doctor'
+            // })
+            // return newPerson
+
         } catch (error: any) {
             console.log(error)
             return null as any

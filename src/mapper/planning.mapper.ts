@@ -1,15 +1,15 @@
 import { PlanningDTO } from "../dto/planning.dto"
-import { WorkdayDTO } from "../dto/workday.dto";
 import { Planning } from "../model/planning.model";
+import { WorkdayMapper } from "./workday.mapper";
 
 export class PlanningMapper {
-    static mapToDto(planning: PlanningDTO, workdayData: WorkdayDTO[]): PlanningDTO {
+    static mapToDto(planning: Planning): PlanningDTO {
         return {
             planning_name: planning.planning_name,
             planning_start: planning.planning_start,
             planning_end: planning.planning_end,
             doctor_id: planning.doctor_id,
-            WorkdaysInfo: workdayData
+            workdays: WorkdayMapper.mapAllToDto(planning.get({plain: true}).workdays)
         }
     }
 
@@ -20,7 +20,7 @@ export class PlanningMapper {
                 planning_start: planning.planning_start,
                 planning_end: planning.planning_end,
                 doctor_id: planning.doctor_id,
-                WorkdaysInfo: planning.get({plain: true}).Workdays
+                workdays: WorkdayMapper.mapAllToDto(planning.get({plain: true}).workdays)
             }
         })
     }

@@ -11,8 +11,8 @@ import { WorkdayMapper } from "../mapper/workday.mapper";
 export class PlanningRepository implements IRepositoryPlanning {
 
     async findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]> {
-        return Planning.findAll({ where: { doctor_id: doctor_id }, include: [Workday] }).then((plannings: Planning[]) => {
-            // plannings
+        return Planning.findAll({ where: { doctor_id: doctor_id }, include: 'workdays' }).then((plannings: Planning[]) => {
+            // return plannings
             return PlanningMapper.mapAllToDto(plannings)
         })
     }
@@ -29,24 +29,33 @@ export class PlanningRepository implements IRepositoryPlanning {
         const numbersOfDays = workdaysData.length
 
         try {
-            return await sequelize.transaction(async (t: Transaction) => {
+            // Transaction inutile? Garde au cas où
+            // return await sequelize.transaction(async (t: Transaction) => {
 
-                const newPlanning = await Planning.create(
-                    planningInfo,
-                    { 
-                        transaction: t
-                     }
-                )
+            //     const newPlanning = await Planning.create(
+            //         planningInfo,
+            //         { 
+            //             transaction: t
+            //          }
+            //     )
 
-                for (let i = 0; i < numbersOfDays; i++) {
-                    await Workday.create(
-                        { ...workdaysData[i], planning_id: newPlanning.planning_id },
-                        { transaction: t }
-                    )
-                }
+            //     for (let i = 0; i < numbersOfDays; i++) {
+            //         await Workday.create(
+            //             { ...workdaysData[i], planning_id: newPlanning.planning_id },
+            //             { transaction: t }
+            //         )
+            //     }
 
-                return PlanningMapper.mapToDto(newPlanning, workdaysData)
+            //     return PlanningMapper.mapToDto(newPlanning, workdaysData)
+            // })
+
+            const newPlanning = await Planning.create({
+                ...planningInfo,
+                workdays: workdaysData
+            }, {
+                include: 'workdays'
             })
+            return PlanningMapper.mapToDto(newPlanning)
 
         } catch (error: any) {
             console.log('Error in repository', error)

@@ -29,7 +29,7 @@ sequelize.authenticate()
     .catch((error: Error) => console.error(`Could not connect to database: ${error}`)
     )
 
-Person.hasOne(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
+Person.hasOne(Doctor, { as: 'doctor', onDelete: 'cascade', foreignKey: 'doctor_id' })
 Doctor.belongsTo(Person, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 
 Person.hasOne(Patient, { onDelete: 'cascade', foreignKey: 'patient_id' })
@@ -40,7 +40,7 @@ Patient.belongsTo(Person, { onDelete: 'cascade', foreignKey: 'patient_id' })
 Doctor.hasMany(Planning, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 Planning.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 
-Planning.hasMany(Workday, { onDelete: 'cascade', foreignKey: 'planning_id' })
+Planning.hasMany(Workday, { as: 'workdays', onDelete: 'cascade', foreignKey: 'planning_id' })
 Workday.belongsTo(Planning, { onDelete: 'cascade', foreignKey: 'planning_id' })
 
 
