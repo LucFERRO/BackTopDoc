@@ -33,6 +33,7 @@ export interface IRepositoryToken {
 export interface IRepositoryPlanning {
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
     create(planningData: PlanningDTO, workdaysInfo: WorkdayDTO[]): Promise<PlanningDTO>;
+    planningDetail(planning_id: number): Promise<any>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

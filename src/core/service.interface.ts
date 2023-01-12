@@ -22,6 +22,7 @@ export interface AuthIService<D,T> {
 export interface PlanningIService {
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
     create(planningData: PlanningDTO, workdaysData: WorkdayDTO[]): Promise<PlanningDTO>;
+    planningDetail(planning_id: number): Promise<PlanningDTO>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

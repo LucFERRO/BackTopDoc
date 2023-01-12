@@ -46,15 +46,15 @@ planningController.get('/:id', planningHandler.findAllOfGivenDoctor)
     "planning_start": "1999-12-31T23:00:00.000Z",
     "planning_end": "2099-12-31T23:00:00.000Z",
     "doctor_id": 1000001}, "workdaysData": [{"workday_number": 1,
-        "workday_start": "1970-01-01T00:00:00.800Z",
-        "workday_end": "1970-01-01T00:00:01.700Z",
-        "slot_duration_minutes": 15},{"workday_number": 3,
-        "workday_start": "1970-01-01T00:00:00.800Z",
-        "workday_end": "1970-01-01T00:00:01.700Z",
-        "slot_duration_minutes": 20},{"workday_number": 5,
-        "workday_start": "1970-01-01T00:00:00.800Z",
-        "workday_end": "1970-01-01T00:00:01.700Z",
-        "slot_duration_minutes": 25}] }
+        "workday_start": "8:00",
+        "workday_end": "17:00",
+        "slot_duration_minutes": 15, "lunch_break_start": "12:00", "lunch_break_end":"13:00"},{"workday_number": 3,
+        "workday_start": "8:00",
+        "workday_end": "17:00",
+        "slot_duration_minutes": 20, "lunch_break_start": "12:00", "lunch_break_end":"13:00"},{"workday_number": 5,
+        "workday_start": "8:00",
+        "workday_end": "17:00",
+        "slot_duration_minutes": 25, "lunch_break_start": "12:00", "lunch_break_end":"13:00"}] }
  *      responses:
  *        200:
  *          description: Create.
@@ -62,3 +62,21 @@ planningController.get('/:id', planningHandler.findAllOfGivenDoctor)
 planningController.post('/',
     // , authenticateToken
     planningHandler.createPlanning)
+
+/**
+ * @openapi
+ * /api/plannings/test/{id}:
+ *  get:
+ *      tags: [Plannings]
+ *      description: Get appointement slots of given planning
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1
+ *      responses:
+ *        200:
+ *          description: Get appointement slots of given planning.
+ */
+planningController.get('/test/:id', planningHandler.planningDetail)

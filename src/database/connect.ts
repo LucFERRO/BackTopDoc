@@ -103,7 +103,9 @@ export const initDb = () => {
                                                     workday_number: workday.workday_number,
                                                     workday_start: workday.workday_start,
                                                     workday_end: workday.workday_end,
-                                                    slot_duration_minutes: workday.slot_duration_minutes
+                                                    slot_duration_minutes: workday.slot_duration_minutes,
+                                                    lunch_break_start: workday.lunch_break_start,
+                                                    lunch_break_end: workday.lunch_break_end,
                                                 }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
                                         })
                                     })

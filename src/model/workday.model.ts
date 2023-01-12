@@ -5,9 +5,11 @@ import { concatRequiredMessage } from "../core/methods"
 export class Workday extends Model {
     workday_id!: number
     workday_number!: number
-    workday_start!: Date
-    workday_end!: Date
+    workday_start!: string
+    workday_end!: string
     slot_duration_minutes!: number
+    lunch_break_start!: string
+    lunch_break_end!: string
 }
 
 Workday.init({
@@ -25,7 +27,7 @@ Workday.init({
         }
     },
     workday_start: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
         validate: {
             notNull: { msg: concatRequiredMessage('Day start') },
@@ -33,7 +35,7 @@ Workday.init({
         }
     },
     workday_end: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
         validate: {
             notNull: { msg: concatRequiredMessage('Day end') },
@@ -46,6 +48,22 @@ Workday.init({
         validate: {
             notNull: { msg: concatRequiredMessage('Slot duration') },
             notEmpty: { msg: concatRequiredMessage('Slot duration') }
+        }
+    },
+    lunch_break_start: {
+        type: DataTypes.TIME,
+        allowNull: false,
+        validate: {
+            notNull: { msg: concatRequiredMessage('Lunch break start') },
+            notEmpty: { msg: concatRequiredMessage('Lunch break start') }
+        }
+    },
+    lunch_break_end: {
+        type: DataTypes.TIME,
+        allowNull: false,
+        validate: {
+            notNull: { msg: concatRequiredMessage('Lunch break end') },
+            notEmpty: { msg: concatRequiredMessage('Lunch break end') }
         }
     },
 },

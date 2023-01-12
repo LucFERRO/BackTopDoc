@@ -34,6 +34,18 @@ export class PlanningHandler {
         }
     }
 
+    planningDetail = async (req: Request, res: Response) => {
+
+        let planning_id: number = parseInt(req.params.id)
+
+        try {
+            const result = await this.planningService.planningDetail(planning_id)
+            return res.status(200).json(result)
+        } catch (err) {
+            return res.status(500).json({ message: 'Error in handler', err })
+        }
+    }
+
     updatePlanning = async (req: Request, res: Response) => {
         const id = parseInt(req.params.id)
 

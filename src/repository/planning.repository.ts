@@ -64,6 +64,13 @@ export class PlanningRepository implements IRepositoryPlanning {
 
     }
 
+    async planningDetail(planning_id: number): Promise<PlanningDTO> {
+        return Planning.findByPk(planning_id, {include: 'workdays' })
+        .then((planning: any) => {
+            return PlanningMapper.mapToDto(planning)
+        })
+    }
+
     async update(data: any, id: number): Promise<number | boolean> {
         throw new Error("Method not implemented.");
     }
