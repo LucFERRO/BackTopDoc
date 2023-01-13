@@ -32,7 +32,9 @@ const swaggerOptions = {
 }
 
 const swaggerOptions2 = {
-    customCss: '.swagger-ui .topbar { display: none }',
+    customCss: '.swagger-ui .topbar { display: none }', 
+    // .opblock-tag-section {background: red !important;}
+    
     customSiteTitle: "TopDoc API",
     // customfavIcon: "/assets/favicon.ico"
 }

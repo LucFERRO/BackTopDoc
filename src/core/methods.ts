@@ -13,7 +13,7 @@ export const numberToTime = (data: number) : string => {
     const minutes = data % 60
 
     const formatedHours = hours < 10 ? `0${hours}` : hours
-    const formatedminutes = hours < 10 ? `0${minutes}` : minutes
+    const formatedminutes = minutes < 10 ? `0${minutes}` : minutes
 
     return `${formatedHours}:${formatedminutes}`
 }

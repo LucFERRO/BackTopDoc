@@ -20,7 +20,7 @@ export const workdays = [
     {
         planning_id: 1,
         workday_number: 4,
-        workday_start: '12:00',
+        workday_start: '10:00',
         workday_end: '17:00',
         slot_duration_minutes: 20,
         lunch_break_start: '11:00',

@@ -30,36 +30,26 @@ export class PlanningService implements PlanningIService {
 
             let planningData : any = {
                 planning_name: planningRawData.planning_name,
-                Lundi: {
-                    start: planningRawData.workdays[0].workday_start,
-                    slot: planningRawData.workdays[0].slot_duration_minutes
-                }
             }
 
             for (let i=0; i < planningRawData.workdays.length; i++) {
-                const slot_duration = planningRawData.workdays[i].slot_duration_minutes
+                const slot_duration : number = planningRawData.workdays[i].slot_duration_minutes
                 const day_detail = [
-                    planningRawData.workdays[i].workday_start.slice(0,-3)
+                    planningRawData.workdays[i].workday_start
                 ]
                 let current = timeToNumber(planningRawData.workdays[i].workday_start)
 
-                while(current+slot_duration < timeToNumber(planningRawData.workdays[i].workday_end)) {
-                    day_detail.push(numberToTime(current+slot_duration))
+                
+                while(current+2*slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
+                    if(current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current+slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
+                        day_detail.push(numberToTime(current+slot_duration))
+                    }
                     current = current+slot_duration
+
                 }
 
                 planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail}
             }
-
-
-
-            //     for (let i = 0; i < numbersOfDays; i++) {
-            //         await Workday.create(
-            //             { ...workdaysData[i], planning_id: newPlanning.planning_id },
-            //             { transaction: t }
-            //         )
-            //     }
-
 
             return planningData
         } catch (error) {
