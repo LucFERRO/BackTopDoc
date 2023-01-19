@@ -6,6 +6,7 @@ import { patientController } from '../controller/patient.controller'
 import { doctorController } from '../controller/doctor.controller'
 import { personController } from "../controller/person.controller";
 import { planningController } from "../controller/planning.controller";
+import { appointementController } from "../controller/appointement.controller";
 
 export const router = Router()
 
@@ -14,12 +15,11 @@ router.use('/docs', swaggerRouter)
 router.use('/auth', authentificationController)
 router.use('/patients', patientController)
 router.use('/doctors', doctorController)
-
+router.use('/plannings', planningController)
+router.use('/appointements', appointementController)
 // A virer ?
 router.use('/persons', personController)
 //
-
-router.use('/plannings', planningController)
 
 router.use('*', (req, res) => {
     return res.status(404).json({ message: 'Ressource not found.' })

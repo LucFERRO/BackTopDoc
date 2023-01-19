@@ -15,6 +15,14 @@ Appointement.init({
         type: DataTypes.DATE,
         primaryKey: true,
     },
+    doctor_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+    },
+    patient_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+    },
     appointement_duration_minutes: {
         type: DataTypes.INTEGER,
         allowNull: false,

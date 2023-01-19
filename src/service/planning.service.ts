@@ -1,4 +1,4 @@
-import { IRepositoryPlanning } from "../core/respository.interface";
+import { IRepositoryAppointement, IRepositoryPlanning } from "../core/respository.interface";
 import { PlanningIService } from "../core/service.interface";
 import { PlanningDTO } from "../dto/planning.dto";
 import { WorkdayDTO } from "../dto/workday.dto";
@@ -12,9 +12,13 @@ const dayIdToName = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'sa
 export class PlanningService implements PlanningIService {
 
     private planningRepository: IRepositoryPlanning;
+    // private vacationRepository: any;
+    // private appointementRepository: IRepositoryAppointement;
 
     constructor(_planningRepository: IRepositoryPlanning) {
         this.planningRepository = _planningRepository;
+        // this.appointementRepository = _appointementRepository
+
     }
 
     async findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]> {
@@ -55,8 +59,6 @@ export class PlanningService implements PlanningIService {
         } catch (error) {
             throw error
         }
-
-        return
     }
     async update(data: PlanningDTO, id: number): Promise<number | boolean | undefined> {
         throw new Error("Method not implemented.");

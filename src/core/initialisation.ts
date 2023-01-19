@@ -18,8 +18,13 @@ import { PlanningService } from "../service/planning.service";
 import { PlanningRepository } from "../repository/planning.repository";
 import { PlanningHandler } from "../handler/planning.handler";
 
+import { AppointementHandler } from "../handler/appointement.handler";
+import { AppointementRepository } from "../repository/appointement.repository";
+import { AppointementService } from "../service/appointement.service";
+
 export const doctorHandler = new DoctorHandler(new DoctorService(new DoctorRepository));
 export const patientHandler = new PatientHandler(new PatientService(new PatientRepository));
 export const personHandler = new PersonHandler(new PersonService(new PersonRepository));
 export const authentificationHandler = new AuthentificationHandler(new AuthentificationService(new TokenRepository, new PersonRepository));
 export const planningHandler = new PlanningHandler(new PlanningService(new PlanningRepository ))
+export const appointementHandler = new AppointementHandler(new AppointementService(new AppointementRepository))

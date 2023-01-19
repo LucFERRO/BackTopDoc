@@ -2,7 +2,7 @@ export const plannings = [
     {
         doctor_id: 1000001,
         planning_name: 'test',
-        planning_start: '01-01-2000',
-        planning_end: '01-01-2100',
+        planning_start: '01-01-2000 00:00:00+01',
+        planning_end: '01-01-2100 00:00:00+01',
     },
 ]

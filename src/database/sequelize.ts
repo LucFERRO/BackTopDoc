@@ -9,7 +9,7 @@ export const sequelize = new Sequelize(
         dialect: 'postgres',
         port: 5432,
         dialectOptions: {
-            timezone: 'Etc/GMT-2'
+            timezone: '+02:00'
         }
     }
 )

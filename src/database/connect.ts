@@ -162,7 +162,6 @@ export const initDb = () => {
 
         vacations.map(vacation => {
             Vacation.create({
-                vacation_id: vacation.vacation_id,
                 vacation_start: vacation.vacation_start,
                 vacation_end: vacation.vacation_end,
             }).then((response: { toJSON: () => string }) => console.log('Vacation', response.toJSON()))

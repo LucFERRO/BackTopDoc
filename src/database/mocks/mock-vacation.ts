@@ -1,7 +1,6 @@
 export const vacations = [
     {
-        vacation_id: 1,
-        vacation_start: new Date,
-        vacation_end: new Date,
+        vacation_start: '2022-12-23',
+        vacation_end: '2023-01-02',
     }
 ]

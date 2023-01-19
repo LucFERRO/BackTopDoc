@@ -1,4 +1,5 @@
 //Pas besoin ?
+import { AppointementDTO } from "../dto/appointement.dto";
 import { PersonDTOFull } from "../dto/person.dto";
 import { PlanningDTO } from "../dto/planning.dto";
 import { TokenDTO } from "../dto/token.dto";
@@ -35,5 +36,12 @@ export interface IRepositoryPlanning {
     create(planningData: PlanningDTO, workdaysInfo: WorkdayDTO[]): Promise<PlanningDTO>;
     planningDetail(planning_id: number): Promise<any>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
+    delete(id: number): Promise<boolean | number>;
+}
+
+export interface IRepositoryAppointement {
+    findAllOfGivenPerson(person_id: number): Promise<AppointementDTO[]>;
+    create(data: AppointementDTO): Promise<AppointementDTO>;
+    update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

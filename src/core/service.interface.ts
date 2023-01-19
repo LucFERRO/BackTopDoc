@@ -1,3 +1,4 @@
+import { AppointementDTO } from "../dto/appointement.dto";
 import { PersonDTOFull } from "../dto/person.dto";
 import { PlanningDTO } from "../dto/planning.dto";
 import { WorkdayDTO } from "../dto/workday.dto";
@@ -24,5 +25,12 @@ export interface PlanningIService {
     create(planningData: PlanningDTO, workdaysData: WorkdayDTO[]): Promise<PlanningDTO>;
     planningDetail(planning_id: number): Promise<PlanningDTO>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
+    delete(id: number): Promise<boolean | number>;
+}
+
+export interface AppointementIService {
+    findAllOfGivenPerson(person_id: any): Promise<AppointementDTO[]>;
+    create(data: AppointementDTO): Promise<AppointementDTO>;
+    update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }
