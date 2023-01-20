@@ -22,4 +22,17 @@ export class VacationHandler {
     
     }
 
+    getVacations = async (req: Request, res: Response) => {
+        let doctor_id = parseInt(req.params.id)
+        try {
+            const result = await this.vacationService.findById(doctor_id)
+            if (!result) throw new Error('not in db')
+            res.status(200).json(result)
+    
+        } catch (err : any) {
+            res.status(500).json(err.message)
+        }
+    
+    }
+
 }

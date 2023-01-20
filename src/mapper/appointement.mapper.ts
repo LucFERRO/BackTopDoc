@@ -8,6 +8,8 @@ export class AppointementMapper {
             appointement_date: appointement.appointement_date,
             appointement_duration_minutes: appointement.appointement_duration_minutes,
             appointement_reason: appointement.appointement_reason,
+            doctor_id: appointement.doctor_id,
+            patient_id: appointement.patient_id
         }
     }
 
@@ -17,6 +19,8 @@ export class AppointementMapper {
                 appointement_date: appointement.appointement_date,
                 appointement_duration_minutes: appointement.appointement_duration_minutes,
                 appointement_reason: appointement.appointement_reason,
+                doctor_id: appointement.doctor_id,
+                patient_id: appointement.patient_id
             }
         })
     }

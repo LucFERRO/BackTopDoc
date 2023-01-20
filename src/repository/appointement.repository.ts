@@ -6,8 +6,12 @@ import { PlanningDTO } from "../dto/planning.dto";
 import { Doctor } from "../model/doctor.model";
 
 export class AppointementRepository implements IRepositoryAppointement {
-    async findAllOfGivenPerson(data: any): Promise<any> {
-        return Appointement.findAll({ where: data }).then(appointement => appointement)
+    async findGlobal(data: any): Promise<AppointementDTO[]> {
+        return Appointement.findAll({ where: data }).then(appointements => AppointementMapper.mapAllToDto(appointements))
+    }
+
+    async findByDoctorId(doctor_id: number): Promise<AppointementDTO[]> {
+        return Appointement.findAll({ where: { doctor_id: doctor_id } }).then(appointements => AppointementMapper.mapAllToDto(appointements))
     }
 
     async create(data: AppointementDTO): Promise<AppointementDTO> {

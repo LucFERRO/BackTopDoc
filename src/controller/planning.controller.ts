@@ -97,4 +97,4 @@ planningController.post('/',
  *        200:
  *          description: Get availabilities of given doctor.
  */
-planningController.get('/:id/final', planningHandler.availableSlots)
+planningController.get('/:id/final', planningHandler.availabilities)

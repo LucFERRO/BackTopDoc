@@ -24,13 +24,14 @@ export interface PlanningIService {
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
     create(planningData: PlanningDTO, workdaysData: WorkdayDTO[]): Promise<PlanningDTO>;
     availableSlots(doctor_id: number): Promise<PlanningDTO>;
-    availabilities(doctor_id: number): Promise<any>;
+    availabilities(doctor_id: number, today: Date): Promise<any>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }
 
 export interface AppointementIService {
-    findAllOfGivenPerson(person_id: any): Promise<AppointementDTO[]>;
+    findGlobal(data: any): Promise<AppointementDTO[]>;
+    appointementList(doctor_id: any): Promise<AppointementDTO[]>;
     create(data: AppointementDTO): Promise<AppointementDTO>;
     update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;

@@ -35,13 +35,14 @@ export interface IRepositoryPlanning {
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
     create(planningData: PlanningDTO, workdaysInfo: WorkdayDTO[]): Promise<PlanningDTO>;
     availableSlots(doctor_id: number): Promise<any>;
-    availabilities(doctor_id: number): Promise<any>;
+    availabilities(doctor_id: number, today: Date): Promise<any>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }
 
 export interface IRepositoryAppointement {
-    findAllOfGivenPerson(person_id: number): Promise<AppointementDTO[]>;
+    findGlobal(person_id: number): Promise<AppointementDTO[]>;
+    findByDoctorId(doctor_id: number): Promise<AppointementDTO[]>
     create(data: AppointementDTO): Promise<AppointementDTO>;
     update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;

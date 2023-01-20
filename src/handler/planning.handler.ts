@@ -47,6 +47,19 @@ export class PlanningHandler {
         }
     }
 
+    availabilities = async (req: Request, res: Response) => {
+
+        let doctor_id: number = parseInt(req.params.id)
+
+        try {
+            const result = await this.planningService.availabilities(doctor_id, new Date)
+            if (!result) return res.status(404).send('Requested planning does not exist.')
+            return res.status(200).json(result)
+        } catch (err) {
+            return res.status(500).json({ message: 'Error in handler', err })
+        }
+    }
+
     updatePlanning = async (req: Request, res: Response) => {
         const id = parseInt(req.params.id)
 

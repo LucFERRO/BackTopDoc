@@ -1,4 +1,4 @@
-import { IRepositoryAppointement, IRepositoryPlanning } from "../core/respository.interface";
+import { IRepository, IRepositoryAppointement, IRepositoryPlanning } from "../core/respository.interface";
 import { PlanningIService } from "../core/service.interface";
 import { PlanningDTO } from "../dto/planning.dto";
 import { WorkdayDTO } from "../dto/workday.dto";
@@ -6,18 +6,21 @@ import { numberToTime, timeToNumber } from "../core/methods";
 import { Person } from "../model/person.model";
 import { Planning } from "../model/planning.model";
 import { Workday } from "../model/workday.model";
+import { VacationDTO } from "../dto/vacation.dto";
+import dayjs from "dayjs";
 
 const dayIdToName = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
 export class PlanningService implements PlanningIService {
 
     private planningRepository: IRepositoryPlanning;
-    // private vacationRepository: any;
+    private vacationRepository: IRepository<VacationDTO>;
     private appointementRepository: IRepositoryAppointement;
 
-    constructor(_planningRepository: IRepositoryPlanning, _appointementRepository: IRepositoryAppointement) {
+    constructor(_planningRepository: IRepositoryPlanning, _vacationRepository: IRepository<VacationDTO>, _appointementRepository: IRepositoryAppointement) {
         this.planningRepository = _planningRepository;
-        this.appointementRepository = _appointementRepository
+        this.vacationRepository = _vacationRepository;
+        this.appointementRepository = _appointementRepository;
     }
 
     async findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]> {
@@ -55,15 +58,32 @@ export class PlanningService implements PlanningIService {
                 slot_durations.push(slot_duration)
                 planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail }
             }
-            planningData = { ...planningData, slot_durations}
+            planningData = { ...planningData, slot_durations }
             return planningData
         } catch (error) {
             throw error
         }
     }
-    async availabilities(doctor_id: number): Promise<any> {
+    async availabilities(doctor_id: number, today: Date): Promise<any> {
         try {
             const planningRawData = await this.planningRepository.availableSlots(doctor_id)
+            const todayDate = dayjs(today)
+
+            let array: string[][] = [[]]
+
+            let y = 0
+            for (let i = 0; i < 200; i++) {
+                if (todayDate.add(y, 'month').month() != todayDate.add(i, 'day').month()) {
+                    y++
+                }
+                if (array.length <= y) {
+                    array.push([])
+                }
+                array[y].push(todayDate.add(i, 'day').format('YYYY:MM:DD'))
+                
+            }
+
+            console.log(array)
 
             let planningData: any = {
                 planning_name: planningRawData.planning_name,
@@ -89,7 +109,7 @@ export class PlanningService implements PlanningIService {
                 slot_durations.push(slot_duration)
                 planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail }
             }
-            planningData = { ...planningData, slot_durations}
+            planningData = { ...planningData, slot_durations }
             return planningData
         } catch (error) {
             throw error

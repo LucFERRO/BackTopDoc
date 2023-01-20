@@ -13,8 +13,8 @@ export class VacationService implements IService<VacationDTO> {
     findAll(): Promise<VacationDTO[]> {
         return this.vacationRepository.findAll()
     }
-    findById(id: number): Promise<VacationDTO | null> {
-        throw new Error("Method not implemented.");
+    findById(doctor_id: number): Promise<VacationDTO | null> {
+        return this.vacationRepository.findById(doctor_id)
     }
     create(t: VacationDTO): Promise<VacationDTO | undefined> {
         throw new Error("Method not implemented.");

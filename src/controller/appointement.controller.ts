@@ -20,9 +20,9 @@ export const appointementController = Router();
  *      parameters:
  *       - name: date
  *         in: path
- *         required: true
+ *         required: false
  *         type: string
- *         default: 2000-01-01 14:30
+ *         default: 2023-01-25 9:30
   *       - name: doctor
  *         in: path
  *         required: false
@@ -37,7 +37,7 @@ export const appointementController = Router();
  *        200:
  *          description: Get appointements of given person.
  */
-appointementController.get('/', appointementHandler.findAllOfGivenPerson)
+appointementController.get('/', appointementHandler.findGlobal)
 
 /**
  * @openapi
@@ -61,18 +61,18 @@ appointementController.post('/', appointementHandler.create)
 
 /**
  * @openapi
- * /api/appointements/test/{id}:
+ * /api/appointements/{id}:
  *  get:
  *      tags: [Appointements]
- *      description: Get appointement slots of given appointement
+ *      description: Get appointement of given doctor
  *      parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         type: integer
- *         default: 1
+ *         default: 1000001
  *      responses:
  *        200:
- *          description: Get appointement slots of given appointement.
+ *          description: Get appointements of given doctor.
  */
-// appointementController.get('/test/:id', appointementHandler.appointementDetail)
+appointementController.get('/:id', appointementHandler.appointementList)

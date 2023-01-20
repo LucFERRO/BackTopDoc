@@ -22,3 +22,21 @@ export const vacationController = Router();
  *          description: Get person of given mail.
  */
 vacationController.get('/', vacationHandler.getAllVacations)
+
+/**
+ * @openapi
+ * /api/vacations/{id}:
+ *  get:
+ *      tags: [Vacations]
+ *      description: Get vacations of given doctor
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1000001
+ *      responses:
+ *        200:
+ *          description: Get vacations of given doctor.
+ */
+vacationController.get('/:id', vacationHandler.getVacations)

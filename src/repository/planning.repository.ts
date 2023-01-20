@@ -71,7 +71,7 @@ export class PlanningRepository implements IRepositoryPlanning {
             })
     }
 
-    async availabilities(doctor_id: number): Promise<PlanningDTO> {
+    async availabilities(doctor_id: number, today: Date): Promise<PlanningDTO> {
         return Planning.findOne({ where: { doctor_id: doctor_id }, include: 'workdays' })
             .then((planning: any) => {
                 return PlanningMapper.mapToDto(planning)

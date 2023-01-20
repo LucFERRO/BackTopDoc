@@ -11,8 +11,11 @@ export class AppointementService implements AppointementIService {
     constructor(_appointementRepository: IRepositoryAppointement) {
         this.appointementRepository = _appointementRepository;
     }
-    async findAllOfGivenPerson(data: any): Promise<AppointementDTO[]> {
-        return this.appointementRepository.findAllOfGivenPerson(data)
+    async appointementList(doctor_id: any): Promise<AppointementDTO[]> {
+        return this.appointementRepository.findByDoctorId(doctor_id)
+    }
+    async findGlobal(data: any): Promise<AppointementDTO[]> {
+        return this.appointementRepository.findGlobal(data)
     }
     async create(data: AppointementDTO): Promise<AppointementDTO> {
         return this.appointementRepository.create(data)
