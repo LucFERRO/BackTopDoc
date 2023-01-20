@@ -5,6 +5,7 @@ export class VacationMapper {
     static mapToDto(vacation: Vacation | null): VacationDTO | null {
         if (vacation === null) return null;
         return {
+            doctor_id: vacation.doctor_id,
             vacation_start: vacation.vacation_start,
             vacation_end: vacation.vacation_end,
         }
@@ -13,6 +14,7 @@ export class VacationMapper {
     static mapAllToDto(vacations: Vacation[]): VacationDTO[] {
         return vacations.map(vacation => {
             return  {
+                doctor_id: vacation.doctor_id,
                 vacation_start: vacation.vacation_start,
                 vacation_end: vacation.vacation_end,
             }

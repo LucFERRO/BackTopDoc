@@ -15,15 +15,16 @@ export interface PersonIService {
     findByMail(mail: string): Promise<PersonDTOFull | null>;
 }
 
-export interface AuthIService<D,T> {
-    login(d:D): Promise<D>;
-    refreshToken(t:T): Promise<T>
+export interface AuthIService<D, T> {
+    login(d: D): Promise<D>;
+    refreshToken(t: T): Promise<T>
 }
 
 export interface PlanningIService {
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
     create(planningData: PlanningDTO, workdaysData: WorkdayDTO[]): Promise<PlanningDTO>;
-    planningDetail(planning_id: number): Promise<PlanningDTO>;
+    availableSlots(doctor_id: number): Promise<PlanningDTO>;
+    availabilities(doctor_id: number): Promise<any>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

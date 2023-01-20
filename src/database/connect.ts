@@ -43,7 +43,8 @@ Planning.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 Planning.hasMany(Workday, { as: 'workdays', onDelete: 'cascade', foreignKey: 'planning_id' })
 Workday.belongsTo(Planning, { onDelete: 'cascade', foreignKey: 'planning_id' })
 
-
+Doctor.hasMany(Vacation, { onDelete: 'cascade', foreignKey: 'doctor_id' })
+Vacation.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 
 Doctor.hasMany(Appointement, { onDelete: 'cascade', foreignKey: 'doctor_id' })
 Appointement.belongsTo(Doctor, { onDelete: 'cascade', foreignKey: 'doctor_id' })
@@ -86,6 +87,19 @@ export const initDb = () => {
                         }).then((response: { toJSON: () => string }) => {
                             console.log('Doctor', response.toJSON())
 
+
+                            vacations.map(vacation => {
+                                // TODO : Cadencement ?
+                                if (doctor.doctor_id == vacation.doctor_id) {
+                                    Vacation.create({
+                                        doctor_id: vacation.doctor_id,
+                                        vacation_start: vacation.vacation_start,
+                                        vacation_end: vacation.vacation_end,
+                                    }).then((response: { toJSON: () => string }) => console.log('Vacation', response.toJSON()))
+                                }
+                            })
+
+
                             plannings.map(planning => {
                                 // TODO : Cadencement ?
                                 if (doctor.doctor_id == planning.doctor_id) {
@@ -98,15 +112,15 @@ export const initDb = () => {
                                     }).then((response: { toJSON: () => string }) => {
                                         console.log('Planning', response.toJSON())
                                         workdays.map(workday => {
-                                                Workday.create({
-                                                    planning_id: workday.planning_id,
-                                                    workday_number: workday.workday_number,
-                                                    workday_start: workday.workday_start,
-                                                    workday_end: workday.workday_end,
-                                                    slot_duration_minutes: workday.slot_duration_minutes,
-                                                    lunch_break_start: workday.lunch_break_start,
-                                                    lunch_break_end: workday.lunch_break_end,
-                                                }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
+                                            Workday.create({
+                                                planning_id: workday.planning_id,
+                                                workday_number: workday.workday_number,
+                                                workday_start: workday.workday_start,
+                                                workday_end: workday.workday_end,
+                                                slot_duration_minutes: workday.slot_duration_minutes,
+                                                lunch_break_start: workday.lunch_break_start,
+                                                lunch_break_end: workday.lunch_break_end,
+                                            }).then((response: { toJSON: () => string }) => console.log('Workday', response.toJSON()))
                                         })
                                     })
                                 }
@@ -158,13 +172,6 @@ export const initDb = () => {
             Background.create({
                 background_id: background.background_id,
             }).then((response: { toJSON: () => string }) => console.log('Background', response.toJSON()))
-        })
-
-        vacations.map(vacation => {
-            Vacation.create({
-                vacation_start: vacation.vacation_start,
-                vacation_end: vacation.vacation_end,
-            }).then((response: { toJSON: () => string }) => console.log('Vacation', response.toJSON()))
         })
 
         console.log('Database successfully initialized.')

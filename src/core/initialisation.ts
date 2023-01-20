@@ -22,9 +22,14 @@ import { AppointementHandler } from "../handler/appointement.handler";
 import { AppointementRepository } from "../repository/appointement.repository";
 import { AppointementService } from "../service/appointement.service";
 
+import { VacationService } from "../service/vacations.service";
+import { VacationHandler } from "../handler/vacation.handler";
+import { VacationRepository } from "../repository/vacation.repository";
+
 export const doctorHandler = new DoctorHandler(new DoctorService(new DoctorRepository));
 export const patientHandler = new PatientHandler(new PatientService(new PatientRepository));
 export const personHandler = new PersonHandler(new PersonService(new PersonRepository));
 export const authentificationHandler = new AuthentificationHandler(new AuthentificationService(new TokenRepository, new PersonRepository));
-export const planningHandler = new PlanningHandler(new PlanningService(new PlanningRepository ))
+export const planningHandler = new PlanningHandler(new PlanningService(new PlanningRepository, new AppointementRepository ))
 export const appointementHandler = new AppointementHandler(new AppointementService(new AppointementRepository))
+export const vacationHandler = new VacationHandler(new VacationService( new VacationRepository))

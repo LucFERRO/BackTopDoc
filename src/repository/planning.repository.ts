@@ -64,11 +64,18 @@ export class PlanningRepository implements IRepositoryPlanning {
 
     }
 
-    async planningDetail(planning_id: number): Promise<PlanningDTO> {
-        return Planning.findByPk(planning_id, {include: 'workdays' })
-        .then((planning: any) => {
-            return PlanningMapper.mapToDto(planning)
-        })
+    async availableSlots(doctor_id: number): Promise<PlanningDTO> {
+        return Planning.findOne({ where: { doctor_id: doctor_id }, include: 'workdays' })
+            .then((planning: any) => {
+                return PlanningMapper.mapToDto(planning)
+            })
+    }
+
+    async availabilities(doctor_id: number): Promise<PlanningDTO> {
+        return Planning.findOne({ where: { doctor_id: doctor_id }, include: 'workdays' })
+            .then((planning: any) => {
+                return PlanningMapper.mapToDto(planning)
+            })
     }
 
     async update(data: any, id: number): Promise<number | boolean> {

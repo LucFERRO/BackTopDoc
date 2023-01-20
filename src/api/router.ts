@@ -7,6 +7,7 @@ import { doctorController } from '../controller/doctor.controller'
 import { personController } from "../controller/person.controller";
 import { planningController } from "../controller/planning.controller";
 import { appointementController } from "../controller/appointement.controller";
+import { vacationController } from "../controller/vacation.controller";
 
 export const router = Router()
 
@@ -17,6 +18,7 @@ router.use('/patients', patientController)
 router.use('/doctors', doctorController)
 router.use('/plannings', planningController)
 router.use('/appointements', appointementController)
+router.use('/vacations', vacationController)
 // A virer ?
 router.use('/persons', personController)
 //

@@ -13,12 +13,11 @@ export class PlanningService implements PlanningIService {
 
     private planningRepository: IRepositoryPlanning;
     // private vacationRepository: any;
-    // private appointementRepository: IRepositoryAppointement;
+    private appointementRepository: IRepositoryAppointement;
 
-    constructor(_planningRepository: IRepositoryPlanning) {
+    constructor(_planningRepository: IRepositoryPlanning, _appointementRepository: IRepositoryAppointement) {
         this.planningRepository = _planningRepository;
-        // this.appointementRepository = _appointementRepository
-
+        this.appointementRepository = _appointementRepository
     }
 
     async findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]> {
@@ -28,38 +27,76 @@ export class PlanningService implements PlanningIService {
     async create(planningData: PlanningDTO, workdaysData: WorkdayDTO[]): Promise<PlanningDTO> {
         return this.planningRepository.create(planningData, workdaysData)
     }
-    async planningDetail(planning_id: number): Promise<any> {
+    async availableSlots(doctor_id: number): Promise<any> {
         try {
-            const planningRawData = await this.planningRepository.planningDetail(planning_id)
+            const planningRawData = await this.planningRepository.availableSlots(doctor_id)
 
-            let planningData : any = {
+            let planningData: any = {
                 planning_name: planningRawData.planning_name,
             }
+            let slot_durations = []
 
-            for (let i=0; i < planningRawData.workdays.length; i++) {
-                const slot_duration : number = planningRawData.workdays[i].slot_duration_minutes
+            for (let i = 0; i < planningRawData.workdays.length; i++) {
+                const slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
                 const day_detail = [
                     planningRawData.workdays[i].workday_start
                 ]
                 let current = timeToNumber(planningRawData.workdays[i].workday_start)
 
-                
-                while(current+2*slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
-                    if(current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current+slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
-                        day_detail.push(numberToTime(current+slot_duration))
+
+                while (current + 2 * slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
+                    if (current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current + slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
+                        day_detail.push(numberToTime(current + slot_duration))
                     }
-                    current = current+slot_duration
+                    current = current + slot_duration
 
                 }
 
-                planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail}
+                slot_durations.push(slot_duration)
+                planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail }
             }
-
+            planningData = { ...planningData, slot_durations}
             return planningData
         } catch (error) {
             throw error
         }
     }
+    async availabilities(doctor_id: number): Promise<any> {
+        try {
+            const planningRawData = await this.planningRepository.availableSlots(doctor_id)
+
+            let planningData: any = {
+                planning_name: planningRawData.planning_name,
+            }
+            let slot_durations = []
+
+            for (let i = 0; i < planningRawData.workdays.length; i++) {
+                const slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
+                const day_detail = [
+                    planningRawData.workdays[i].workday_start
+                ]
+                let current = timeToNumber(planningRawData.workdays[i].workday_start)
+
+
+                while (current + 2 * slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
+                    if (current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current + slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
+                        day_detail.push(numberToTime(current + slot_duration))
+                    }
+                    current = current + slot_duration
+
+                }
+
+                slot_durations.push(slot_duration)
+                planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail }
+            }
+            planningData = { ...planningData, slot_durations}
+            return planningData
+        } catch (error) {
+            throw error
+        }
+    }
+
+
     async update(data: PlanningDTO, id: number): Promise<number | boolean | undefined> {
         throw new Error("Method not implemented.");
     }

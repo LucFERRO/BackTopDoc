@@ -4,10 +4,10 @@ import { Vacation } from "../model/vacation.model";
 import { VacationMapper } from "../mapper/vacation.mapper";
 
 export class VacationRepository implements IRepository<VacationDTO> {
-    update(data: VacationDTO, id: number): Promise<number | boolean> {
+    async update(data: VacationDTO, id: number): Promise<number | boolean> {
         throw new Error("Method not implemented.");
     }
-    delete(id: number): Promise<boolean> {
+    async delete(id: number): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
 
@@ -16,10 +16,10 @@ export class VacationRepository implements IRepository<VacationDTO> {
     }
 
     async findAll(): Promise<VacationDTO[]> {
-        throw new Error("Method not implemented.");
+        return Vacation.findAll().then(vacations => VacationMapper.mapAllToDto(vacations))
     }
 
-    create(t: VacationDTO): Promise<VacationDTO> {
+    async create(t: VacationDTO): Promise<VacationDTO> {
         throw new Error("Method not implemented.");
     }
 

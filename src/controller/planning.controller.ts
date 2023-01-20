@@ -31,6 +31,24 @@ planningController.get('/:id', planningHandler.findAllOfGivenDoctor)
 
 /**
  * @openapi
+ * /api/plannings/{id}/slots:
+ *  get:
+ *      tags: [Plannings]
+ *      description: Get appointement slots of given doctor
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1000001
+ *      responses:
+ *        200:
+ *          description: Get time slots of given doctor.
+ */
+planningController.get('/:id/slots', planningHandler.availableSlots)
+
+/**
+ * @openapi
  * /api/plannings:
  *   post:
  *      tags: [Plannings]
@@ -65,18 +83,18 @@ planningController.post('/',
 
 /**
  * @openapi
- * /api/plannings/test/{id}:
+ * /api/plannings/{id}/final:
  *  get:
  *      tags: [Plannings]
- *      description: Get appointement slots of given planning
+ *      description: Get availabilities of given doctor
  *      parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         type: integer
- *         default: 1
+ *         default: 1000001
  *      responses:
  *        200:
- *          description: Get appointement slots of given planning.
+ *          description: Get availabilities of given doctor.
  */
-planningController.get('/test/:id', planningHandler.planningDetail)
+planningController.get('/:id/final', planningHandler.availableSlots)

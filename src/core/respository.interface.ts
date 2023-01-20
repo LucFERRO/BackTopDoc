@@ -9,8 +9,8 @@ export interface IRepository<T> {
     findAll(): Promise<T[]>;
     findById(id: number): Promise<T | null>;
     create(t: T): Promise<T>;
-    update(data : T,id: number): Promise<boolean | number | undefined>;
-    delete(id: number): Promise<boolean >;
+    update(data: T, id: number): Promise<boolean | number | undefined>;
+    delete(id: number): Promise<boolean>;
 }
 
 export interface IRepositoryInheritance<T> {
@@ -34,7 +34,8 @@ export interface IRepositoryToken {
 export interface IRepositoryPlanning {
     findAllOfGivenDoctor(doctor_id: number): Promise<PlanningDTO[]>;
     create(planningData: PlanningDTO, workdaysInfo: WorkdayDTO[]): Promise<PlanningDTO>;
-    planningDetail(planning_id: number): Promise<any>;
+    availableSlots(doctor_id: number): Promise<any>;
+    availabilities(doctor_id: number): Promise<any>;
     update(t: PlanningDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

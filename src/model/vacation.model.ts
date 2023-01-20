@@ -4,6 +4,7 @@ import { concatRequiredMessage } from "../core/methods"
 
 export class Vacation extends Model {
     vacation_id!: number
+    doctor_id!: number
     vacation_start!: Date
     vacation_end!: Date
 }
