@@ -1,7 +1,7 @@
 export const workdays = [
     {
         planning_id: 1,
-        workday_number: 0,
+        workday_number: 1,
         workday_start: '8:00',
         workday_end: '17:00',
         slot_duration_minutes: 15,
@@ -10,7 +10,7 @@ export const workdays = [
     },
     {
         planning_id: 1,
-        workday_number: 2,
+        workday_number: 3,
         workday_start: '8:00',
         workday_end: '17:00',
         slot_duration_minutes: 15,
@@ -19,7 +19,7 @@ export const workdays = [
     },
     {
         planning_id: 1,
-        workday_number: 4,
+        workday_number: 5,
         workday_start: '10:00',
         workday_end: '17:00',
         slot_duration_minutes: 20,

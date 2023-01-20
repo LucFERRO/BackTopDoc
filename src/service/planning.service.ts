@@ -8,6 +8,12 @@ import { Planning } from "../model/planning.model";
 import { Workday } from "../model/workday.model";
 import { VacationDTO } from "../dto/vacation.dto";
 import dayjs from "dayjs";
+import toObject from 'dayjs/plugin/toObject'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import isBetween from 'dayjs/plugin/isBetween'
+dayjs.extend(toObject)
+dayjs.extend(relativeTime)
+dayjs.extend(isBetween)
 
 const dayIdToName = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
@@ -66,32 +72,86 @@ export class PlanningService implements PlanningIService {
     }
     async availabilities(doctor_id: number, today: Date): Promise<any> {
         try {
-            const todayDate = dayjs(today).second(0)
+            const numberOfDays = 20
+            const todayDate = dayjs(today).startOf('date')
 
             const planningRawData = await this.planningRepository.availableSlots(doctor_id)
             const vacationRawData = await this.vacationRepository.findVacations(doctor_id)
             const appointementRawData = await this.appointementRepository.findByDoctorId(doctor_id)
 
-            // vacationRawData && vacationRawData.forEach( vacation => {
+            //Slot templates creation
+            let slot_template: any = []
 
-            // })
+            for (let i = 0; i < planningRawData.workdays.length; i++) {
+                const slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
+                const day_detail = [
+                    planningRawData.workdays[i].workday_start
+                ]
+                let current = timeToNumber(planningRawData.workdays[i].workday_start)
 
-            console.log('vacations', vacationRawData)
-            console.log('appointements', appointementRawData)
+
+                while (current + 2 * slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
+                    if (current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current + slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
+                        day_detail.push(numberToTime(current + slot_duration))
+                    }
+                    current = current + slot_duration
+
+                }
+
+                slot_template.push({ day_number: planningRawData.workdays[i].workday_number, slot_duration, day_detail })
+            }
+
+            // Filters the vacations that will impact the upcoming %numberOfDays%
+            let usefulVacationData: any = []
+            vacationRawData.forEach(vacation => {
+                if (dayjs(vacation.vacation_start).isBetween(todayDate, todayDate.add(numberOfDays, 'day'), 'day') || dayjs(vacation.vacation_end).isBetween(todayDate, todayDate.add(numberOfDays, 'day'), 'day')) {
+                    usefulVacationData.push(vacation)
+                }
+            })
+
+            // Filters the appointements that will impact the upcoming %numberOfDays%
+            let usefulAppointementData: any = []
+            appointementRawData.forEach(appointement => {
+                if (dayjs(appointement.appointement_date).isBetween(todayDate, todayDate.add(numberOfDays, 'day'), 'day')) {
+                    usefulAppointementData.push(appointement)
+                }
+            })
 
             let array: any[][] = [[]]
-
             let y = 0
-            for (let i = 0; i < 20; i++) {
+            let vacation_state = false;
+            for (let i = 0; i < numberOfDays; i++) {
+
+                vacation_state = false
+
+                usefulVacationData.forEach((vacation: any) => {
+                    if (todayDate.add(i, 'day').isBetween(vacation.vacation_start, vacation.vacation_end, 'day', '(]')) vacation_state = true
+                })
+
+                // usefulAppointementData.forEach((appointement: any) => {
+
+                // })
+
                 if (todayDate.add(y, 'month').month() != todayDate.add(i, 'day').month()) {
                     y++
                 }
                 if (array.length <= y) {
                     array.push([])
                 }
+
+                let fitting_template = slot_template.find((template: any) => template.day_number == parseInt(todayDate.add(i, 'day').format('d')))
+
+                let slots: any = []
+                if (fitting_template != undefined) {
+                    fitting_template.day_detail.forEach((slot: any) => {
+                        slots.push({ time: slot, available: true })
+                    })
+                }
+
                 array[y].push({
                     date: todayDate.add(i, 'day').format('YYYY:MM:DD'),
-                    available: true
+                    vacation: vacation_state,
+                    slots: !vacation_state && slots,
                 })
 
             }
