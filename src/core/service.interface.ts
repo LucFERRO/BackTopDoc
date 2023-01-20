@@ -1,6 +1,7 @@
 import { AppointementDTO } from "../dto/appointement.dto";
 import { PersonDTOFull } from "../dto/person.dto";
 import { PlanningDTO } from "../dto/planning.dto";
+import { VacationDTO } from "../dto/vacation.dto";
 import { WorkdayDTO } from "../dto/workday.dto";
 
 export interface IService<T> {
@@ -34,5 +35,13 @@ export interface AppointementIService {
     appointementList(doctor_id: any): Promise<AppointementDTO[]>;
     create(data: AppointementDTO): Promise<AppointementDTO>;
     update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
+    delete(id: number): Promise<boolean | number>;
+}
+
+export interface VacationIService {
+    findAll(): Promise<VacationDTO[]>;
+    findVacations(id: number): Promise<VacationDTO[]>;
+    create(t: VacationDTO): Promise<VacationDTO | undefined>;
+    update(t: VacationDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
 }

@@ -1,4 +1,4 @@
-import { IRepository, IRepositoryAppointement, IRepositoryPlanning } from "../core/respository.interface";
+import { IRepositoryVacation, IRepositoryAppointement, IRepositoryPlanning } from "../core/respository.interface";
 import { PlanningIService } from "../core/service.interface";
 import { PlanningDTO } from "../dto/planning.dto";
 import { WorkdayDTO } from "../dto/workday.dto";
@@ -14,10 +14,10 @@ const dayIdToName = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'sa
 export class PlanningService implements PlanningIService {
 
     private planningRepository: IRepositoryPlanning;
-    private vacationRepository: IRepository<VacationDTO>;
+    private vacationRepository: IRepositoryVacation;
     private appointementRepository: IRepositoryAppointement;
 
-    constructor(_planningRepository: IRepositoryPlanning, _vacationRepository: IRepository<VacationDTO>, _appointementRepository: IRepositoryAppointement) {
+    constructor(_planningRepository: IRepositoryPlanning, _vacationRepository: IRepositoryVacation, _appointementRepository: IRepositoryAppointement) {
         this.planningRepository = _planningRepository;
         this.vacationRepository = _vacationRepository;
         this.appointementRepository = _appointementRepository;
@@ -66,51 +66,65 @@ export class PlanningService implements PlanningIService {
     }
     async availabilities(doctor_id: number, today: Date): Promise<any> {
         try {
-            const planningRawData = await this.planningRepository.availableSlots(doctor_id)
-            const todayDate = dayjs(today)
+            const todayDate = dayjs(today).second(0)
 
-            let array: string[][] = [[]]
+            const planningRawData = await this.planningRepository.availableSlots(doctor_id)
+            const vacationRawData = await this.vacationRepository.findVacations(doctor_id)
+            const appointementRawData = await this.appointementRepository.findByDoctorId(doctor_id)
+
+            // vacationRawData && vacationRawData.forEach( vacation => {
+
+            // })
+
+            console.log('vacations', vacationRawData)
+            console.log('appointements', appointementRawData)
+
+            let array: any[][] = [[]]
 
             let y = 0
-            for (let i = 0; i < 200; i++) {
+            for (let i = 0; i < 20; i++) {
                 if (todayDate.add(y, 'month').month() != todayDate.add(i, 'day').month()) {
                     y++
                 }
                 if (array.length <= y) {
                     array.push([])
                 }
-                array[y].push(todayDate.add(i, 'day').format('YYYY:MM:DD'))
-                
+                array[y].push({
+                    date: todayDate.add(i, 'day').format('YYYY:MM:DD'),
+                    available: true
+                })
+
             }
 
-            console.log(array)
+            return array
 
-            let planningData: any = {
-                planning_name: planningRawData.planning_name,
-            }
-            let slot_durations = []
+            // let planningData: any = {
+            //     planning_name: planningRawData.planning_name,
+            // }
+            // let slot_durations = []
 
-            for (let i = 0; i < planningRawData.workdays.length; i++) {
-                const slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
-                const day_detail = [
-                    planningRawData.workdays[i].workday_start
-                ]
-                let current = timeToNumber(planningRawData.workdays[i].workday_start)
+            // for (let i = 0; i < planningRawData.workdays.length; i++) {
+            //     const slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
+            //     const day_detail = [
+            //         planningRawData.workdays[i].workday_start
+            //     ]
+            //     let current = timeToNumber(planningRawData.workdays[i].workday_start)
 
 
-                while (current + 2 * slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
-                    if (current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current + slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
-                        day_detail.push(numberToTime(current + slot_duration))
-                    }
-                    current = current + slot_duration
+            //     while (current + 2 * slot_duration <= timeToNumber(planningRawData.workdays[i].workday_end)) {
+            //         if (current > timeToNumber(planningRawData.workdays[i].lunch_break_end) || current + slot_duration < timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
+            //             day_detail.push(numberToTime(current + slot_duration))
+            //         }
+            //         current = current + slot_duration
 
-                }
+            //     }
 
-                slot_durations.push(slot_duration)
-                planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail }
-            }
-            planningData = { ...planningData, slot_durations }
-            return planningData
+            //     slot_durations.push(slot_duration)
+            //     planningData = { ...planningData, [dayIdToName[planningRawData.workdays[i].workday_number]]: day_detail }
+            // }
+            // planningData = { ...planningData, slot_durations }
+            // return planningData
+
         } catch (error) {
             throw error
         }

@@ -3,6 +3,7 @@ import { AppointementDTO } from "../dto/appointement.dto";
 import { PersonDTOFull } from "../dto/person.dto";
 import { PlanningDTO } from "../dto/planning.dto";
 import { TokenDTO } from "../dto/token.dto";
+import { VacationDTO } from "../dto/vacation.dto";
 import { WorkdayDTO } from "../dto/workday.dto";
 
 export interface IRepository<T> {
@@ -46,4 +47,12 @@ export interface IRepositoryAppointement {
     create(data: AppointementDTO): Promise<AppointementDTO>;
     update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;
+}
+
+export interface IRepositoryVacation {
+    findAll(): Promise<VacationDTO[]>;
+    findVacations(id: number): Promise<VacationDTO[]>;
+    create(t: VacationDTO): Promise<VacationDTO>;
+    update(data: VacationDTO, id: number): Promise<boolean | number | undefined>;
+    delete(id: number): Promise<boolean>;
 }
