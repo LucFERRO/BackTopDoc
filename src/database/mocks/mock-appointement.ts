@@ -35,10 +35,31 @@ export const appointements = [
         patient_id: 1000000
     },
     {
+        appointement_date: '2023-01-27 16:00',
+        appointement_duration_minutes: 60,
+        appointement_reason: 'test',
+        doctor_id: 1000001,
+        patient_id: 1000000
+    },
+    {
         appointement_date: '2023-01-27 15:00',
         appointement_duration_minutes: 60,
         appointement_reason: 'test',
         doctor_id: 1000001,
         patient_id: 1000000
-    }
+    },
+    {
+        appointement_date: '2023-01-23 10:00',
+        appointement_duration_minutes: 60,
+        appointement_reason: 'test',
+        doctor_id: 1000001,
+        patient_id: 1000000
+    },
+    // {
+    //     appointement_date: '2023-01-23 15:00',
+    //     appointement_duration_minutes: 30,
+    //     appointement_reason: 'test',
+    //     doctor_id: 1000001,
+    //     patient_id: 1000000
+    // }
 ]

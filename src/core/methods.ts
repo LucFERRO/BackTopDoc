@@ -1,19 +1,19 @@
+import dayjs from "dayjs";
+import toObject from 'dayjs/plugin/toObject'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import isBetween from 'dayjs/plugin/isBetween'
+dayjs.extend(toObject)
+dayjs.extend(relativeTime)
+dayjs.extend(isBetween)
+
 export const concatRequiredMessage = (data: string) : string => {
     return `${data} is required.`
 }
 
-export const timeToNumber = (data: string) : number => {
-    const hours = parseInt(data[0] + data[1])
-    const minutes = parseInt(data[3] + data[4])
-    return hours * 60 + minutes
-}
+// export const isTheSlotAvailable = (date : string, slot : string, appointementList : any) => {
+//     let slot_time = slot.split(':')
+//     let formattedDate = dayjs(date).hour(parseInt(slot_time[0])).minute(parseInt(slot_time[1]))
 
-export const numberToTime = (data: number) : string => {
-    const hours = Math.floor(data / 60)
-    const minutes = data % 60
-
-    const formatedHours = hours < 10 ? `0${hours}` : hours
-    const formatedminutes = minutes < 10 ? `0${minutes}` : minutes
-
-    return `${formatedHours}:${formatedminutes}`
-}
+//     let slot_availability = !formattedDate.isBetween(dayjs(appointement.appointement_date), dayjs(appointement.appointement_date).add(appointement.appointement_duration_minutes, 'minute'), 'minute', '[)')
+//     if (!slot_availability) console.log('FOUND A MATCH!', slot_time, appointement.appointement_date)
+// }
