@@ -22,20 +22,41 @@ export class PlanningService implements PlanningIService {
     private vacationRepository: IRepositoryVacation;
     private appointementRepository: IRepositoryAppointement;
 
-    private timeToNumber = (data: string) : number => {
+    private timeToNumber = (data: string): number => {
         const hours = parseInt(data[0] + data[1])
         const minutes = parseInt(data[3] + data[4])
         return hours * 60 + minutes
     }
-    
-    private numberToTime = (data: number) : string => {
+
+    private numberToTime = (data: number): string => {
         const hours = Math.floor(data / 60)
         const minutes = data % 60
-    
+
         const formatedHours = hours < 10 ? `0${hours}` : hours
         const formatedminutes = minutes < 10 ? `0${minutes}` : minutes
-    
+
         return `${formatedHours}:${formatedminutes}`
+    }
+
+    private createSlotsFromPlanning = (planning: any) => {
+        let slot_template: any = []
+        for (let i = 0; i < planning.workdays.length; i++) {
+            let slot_duration: number = planning.workdays[i].slot_duration_minutes
+            const day_detail = [
+                planning.workdays[i].workday_start
+            ]
+            let current = this.timeToNumber(planning.workdays[i].workday_start)
+
+
+            while (current + 2 * slot_duration <= this.timeToNumber(planning.workdays[i].workday_end)) {
+                if (current > this.timeToNumber(planning.workdays[i].lunch_break_end) || current + slot_duration < this.timeToNumber(planning.workdays[i].lunch_break_start)) {
+                    day_detail.push(this.numberToTime(current + slot_duration))
+                }
+                current = current + slot_duration
+            }
+            slot_template.push({ day_number: planning.workdays[i].workday_number, slot_duration, day_detail })
+        }
+        return slot_template
     }
 
     constructor(_planningRepository: IRepositoryPlanning, _vacationRepository: IRepositoryVacation, _appointementRepository: IRepositoryAppointement) {
@@ -60,8 +81,9 @@ export class PlanningService implements PlanningIService {
             }
             let slot_durations = []
 
+
             for (let i = 0; i < planningRawData.workdays.length; i++) {
-                const slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
+                let slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
                 const day_detail = [
                     planningRawData.workdays[i].workday_start
                 ]
@@ -90,14 +112,7 @@ export class PlanningService implements PlanningIService {
             const numberOfDays = 20
             const todayDate = dayjs(today).startOf('date')
 
-            // await all
-            // const planningRawData = await this.planningRepository.availableSlots(doctor_id)
-            // const vacationRawData = await this.vacationRepository.findVacations(doctor_id)
-            // const appointementRawData = await this.appointementRepository.findByDoctorId(doctor_id)
-
-            let planningRawData
-            let vacationRawData
-            let appointementRawData
+            let planningRawData, vacationRawData, appointementRawData
 
             return Promise.all([
                 this.planningRepository.availableSlots(doctor_id),
@@ -108,28 +123,7 @@ export class PlanningService implements PlanningIService {
                 vacationRawData = values[1]
                 appointementRawData = values[2]
 
-
-                //Slot templates creation
-                let slot_template: any = []
-
-                for (let i = 0; i < planningRawData.workdays.length; i++) {
-                    let slot_duration: number = planningRawData.workdays[i].slot_duration_minutes
-                    const day_detail = [
-                        planningRawData.workdays[i].workday_start
-                    ]
-                    let current = this.timeToNumber(planningRawData.workdays[i].workday_start)
-
-
-                    while (current + 2 * slot_duration <= this.timeToNumber(planningRawData.workdays[i].workday_end)) {
-                        if (current > this.timeToNumber(planningRawData.workdays[i].lunch_break_end) || current + slot_duration < this.timeToNumber(planningRawData.workdays[i].lunch_break_start)) {
-                            day_detail.push(this.numberToTime(current + slot_duration))
-                        }
-                        current = current + slot_duration
-
-                    }
-
-                    slot_template.push({ day_number: planningRawData.workdays[i].workday_number, slot_duration, day_detail })
-                }
+                const slot_template = this.createSlotsFromPlanning(planningRawData)
 
                 // Filters the vacations that will impact the upcoming %numberOfDays%
                 let usefulVacationData: any = []
@@ -146,8 +140,6 @@ export class PlanningService implements PlanningIService {
                         usefulAppointementData.push(appointement)
                     }
                 })
-
-                console.log(usefulAppointementData)
 
                 let array: any[][] = [[]]
                 let y = 0
