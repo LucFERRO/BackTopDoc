@@ -32,7 +32,8 @@ export interface PlanningIService {
 
 export interface AppointementIService {
     findGlobal(data: any): Promise<AppointementDTO[]>;
-    appointementList(doctor_id: any): Promise<AppointementDTO[]>;
+    doctorAppointementList(doctor_id: any): Promise<AppointementDTO[]>;
+    patientAppointementList(patient_id: any): Promise<AppointementDTO[]>;
     create(data: AppointementDTO): Promise<AppointementDTO>;
     update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;

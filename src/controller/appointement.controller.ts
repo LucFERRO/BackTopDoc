@@ -75,4 +75,22 @@ appointementController.post('/', appointementHandler.create)
  *        200:
  *          description: Get appointements of given doctor.
  */
-appointementController.get('/:id', appointementHandler.appointementList)
+appointementController.get('/:id', appointementHandler.doctorAppointementList)
+
+/**
+ * @openapi
+ * /api/appointements/patient/{id}:
+ *  get:
+ *      tags: [Appointements]
+ *      description: Get appointement of given patient
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *         default: 1000003
+ *      responses:
+ *        200:
+ *          description: Get appointements of given patient.
+ */
+appointementController.get('/patient/:id', appointementHandler.patientAppointementList)

@@ -11,17 +11,16 @@ export class AppointementHandler {
 
     findGlobal = async (req: Request, res: Response) => {
 
-        const date = req.query.date
+        let date = req.query.date
         const doctor_id = parseInt(req.query.doctor as string)
         const patient_id = parseInt(req.query.patient as string)
 
+        if (!date) date = '{date}'
         let data: any = {}
 
         if (date != '{date}') data = { ...data, appointement_date: date }
         if (doctor_id) data = { ...data, doctor_id: doctor_id }
         if (patient_id) data = { ...data, patient_id: patient_id }
-
-        console.log(data)
 
         try {
             const result = await this.appointementService.findGlobal(data)
@@ -34,12 +33,27 @@ export class AppointementHandler {
 
     }
 
-    appointementList = async (req: Request, res: Response) => {
+    doctorAppointementList = async (req: Request, res: Response) => {
 
         const doctor_id = parseInt(req.params.id)
 
         try {
-            const result = await this.appointementService.appointementList(doctor_id)
+            const result = await this.appointementService.doctorAppointementList(doctor_id)
+            if (!result) throw new Error('not in db')
+            res.status(200).json(result)
+
+        } catch (err: any) {
+            res.status(500).json(err.message)
+        }
+
+    }
+
+    patientAppointementList = async (req: Request, res: Response) => {
+
+        const doctor_id = parseInt(req.params.id)
+
+        try {
+            const result = await this.appointementService.patientAppointementList(doctor_id)
             if (!result) throw new Error('not in db')
             res.status(200).json(result)
 

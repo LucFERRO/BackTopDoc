@@ -44,6 +44,7 @@ export interface IRepositoryPlanning {
 export interface IRepositoryAppointement {
     findGlobal(person_id: number): Promise<AppointementDTO[]>;
     findByDoctorId(doctor_id: number): Promise<AppointementDTO[]>
+    findByPatientId(patient_id: number): Promise<AppointementDTO[]>
     create(data: AppointementDTO): Promise<AppointementDTO>;
     update(t: AppointementDTO, id: number): Promise<boolean | number | undefined>;
     delete(id: number): Promise<boolean | number>;

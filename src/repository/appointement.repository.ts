@@ -14,6 +14,10 @@ export class AppointementRepository implements IRepositoryAppointement {
         return Appointement.findAll({ where: { doctor_id: doctor_id } }).then(appointements => AppointementMapper.mapAllToDto(appointements))
     }
 
+    async findByPatientId(patient_id: number): Promise<AppointementDTO[]> {
+        return Appointement.findAll({ where: { patient_id: patient_id } }).then(appointements => AppointementMapper.mapAllToDto(appointements))
+    }
+
     async create(data: AppointementDTO): Promise<AppointementDTO> {
 
         try {
