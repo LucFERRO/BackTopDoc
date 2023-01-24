@@ -38,11 +38,8 @@ export class AppointementService implements AppointementIService {
 
         const newAppointement = dayjs(data.appointement_date)
 
-
-        // CHECK ICI POUR FAIRE COMME DANS LE TRIGGER
-        uniqueArray.find((appointement: any) => dayjs(appointement.appointement_date).isSameOrBefore(newAppointement.add(data.appointement_duration_minutes, 'minute')) && newAppointement.isSameOrBefore(dayjs(appointement.appointement_date).add(appointement.appointement_duration_minutes, 'minute')))
-
-        console.log('MATCH FOUND!!!', uniqueArray)
+        const potentialConflicts = uniqueArray.find((appointement: any) => dayjs(appointement.appointement_date).isBefore(newAppointement.add(data.appointement_duration_minutes, 'minute')) && newAppointement.isBefore(dayjs(appointement.appointement_date).add(appointement.appointement_duration_minutes, 'minute')))
+        if (potentialConflicts) throw Error('Specified appointement would conflict with an already existing appointement.')
 
         return this.appointementRepository.create(data)
     }
