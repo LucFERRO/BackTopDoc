@@ -61,7 +61,7 @@ appointementController.post('/', appointementHandler.create)
 
 /**
  * @openapi
- * /api/appointements/{id}:
+ * /api/appointements/doctor/{id}:
  *  get:
  *      tags: [Appointements]
  *      description: Get appointement of given doctor
@@ -75,7 +75,7 @@ appointementController.post('/', appointementHandler.create)
  *        200:
  *          description: Get appointements of given doctor.
  */
-appointementController.get('/:id', appointementHandler.doctorAppointementList)
+appointementController.get('/doctor/:id', appointementHandler.doctorAppointementList)
 
 /**
  * @openapi
