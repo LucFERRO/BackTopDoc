@@ -202,6 +202,7 @@ export class PlanningService implements PlanningIService {
                     array[y].push({
                         date: todayDate.add(i, 'day').format('YYYY:MM:DD'),
                         vacation: vacation_state,
+                        slot_duration: fitting_template && fitting_template.slot_duration,
                         slots: !vacation_state && slots,
                     })
 
