@@ -77,7 +77,7 @@ export const appointements = [
         patient_id: 1000003
     },
     {
-        appointement_date: '2023-01-23 10:00',
+        appointement_date: '2023-01-24 10:00',
         appointement_duration_minutes: 60,
         appointement_reason: 'Doc 2 2',
         doctor_id: 1000002,
