@@ -134,7 +134,7 @@ export class PlanningService implements PlanningIService {
     }
     async availabilities(doctor_id: number, today: Date): Promise<any> {
         try {
-            const numberOfDays = 2
+            const numberOfDays = 60
             const todayDate = dayjs(today).startOf('date')
 
             let planningRawData, vacationRawData, appointementRawData

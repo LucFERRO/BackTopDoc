@@ -8,4 +8,5 @@ export interface DoctorDTO {
     phone_number: string,
     description?: string,
     avatar?: string,
+    doctor_id?: number
 }

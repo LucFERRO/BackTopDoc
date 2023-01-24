@@ -8,6 +8,7 @@ export class DoctorMapper {
         console.log(doctor)
         return {
             activity: doctor.activity,
+            doctor_id: doctor.doctor_id,
             lastname: doctor.get({ plain: true }).Person.lastname,
             firstname: doctor.get({ plain: true }).Person.firstname,
             birthdate: doctor.get({ plain: true }).Person.birthdate,
@@ -21,6 +22,7 @@ export class DoctorMapper {
     static mapToDtoCreate(doctor: Doctor, person : Person): DoctorDTO {
         return {
             activity: doctor.activity,
+            doctor_id: doctor.doctor_id,
             lastname: person.lastname, 
             firstname: person.firstname,
             birthdate: person.birthdate,
