@@ -5,4 +5,16 @@ export const plannings = [
         planning_start: '01-01-2000 00:00:00+01',
         planning_end: '01-01-2100 00:00:00+01',
     },
+    {
+        doctor_id: 1000002,
+        planning_name: 'indian',
+        planning_start: '01-01-2000 00:00:00+01',
+        planning_end: '01-01-2100 00:00:00+01',
+    },
+    {
+        doctor_id: 1000003,
+        planning_name: 'planning3',
+        planning_start: '01-01-2000 00:00:00+01',
+        planning_end: '01-01-2100 00:00:00+01',
+    },
 ]
