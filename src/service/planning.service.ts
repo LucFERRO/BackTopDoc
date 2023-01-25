@@ -133,8 +133,8 @@ export class PlanningService implements PlanningIService {
     }
     async availabilities(doctor_id: number, today: Date): Promise<any> {
         try {
-            const numberOfDays = 60
-            const todayDate = dayjs(today).startOf('date')
+            const numberOfDays = 100
+            const startingDate = dayjs(today).add(0,'month')
 
             let planningRawData, vacationRawData, appointementRawData
 
@@ -152,7 +152,7 @@ export class PlanningService implements PlanningIService {
                 // Filters the vacations that will impact the upcoming %numberOfDays%
                 let usefulVacationData: any = []
                 vacationRawData.forEach(vacation => {
-                    if (dayjs(vacation.vacation_start).isBetween(todayDate, todayDate.add(numberOfDays, 'day'), 'day') || dayjs(vacation.vacation_end).isBetween(todayDate, todayDate.add(numberOfDays, 'day'), 'day')) {
+                    if (dayjs(vacation.vacation_start).isBetween(startingDate, startingDate.add(numberOfDays, 'day'), 'day') || dayjs(vacation.vacation_end).isBetween(startingDate, startingDate.add(numberOfDays, 'day'), 'day')) {
                         usefulVacationData.push(vacation)
                     }
                 })
@@ -160,7 +160,7 @@ export class PlanningService implements PlanningIService {
                 // Filters the appointements that will impact the upcoming %numberOfDays%
                 let usefulAppointementData: any = []
                 appointementRawData.forEach(appointement => {
-                    if (dayjs(appointement.appointement_date).isBetween(todayDate, todayDate.add(numberOfDays, 'day'), 'day', '[]')) {
+                    if (dayjs(appointement.appointement_date).isBetween(startingDate, startingDate.add(numberOfDays, 'day'), 'day', '[]')) {
                         usefulAppointementData.push(appointement)
                     }
                 })
@@ -173,23 +173,23 @@ export class PlanningService implements PlanningIService {
                     vacation_state = false
 
                     usefulVacationData.forEach((vacation: any) => {
-                        if (todayDate.add(i, 'day').isBetween(vacation.vacation_start, vacation.vacation_end, 'day', '(]')) vacation_state = true
+                        if (startingDate.add(i, 'day').isBetween(vacation.vacation_start, vacation.vacation_end, 'day', '(]')) vacation_state = true
                     })
 
-                    if (todayDate.add(y, 'month').month() != todayDate.add(i, 'day').month()) {
+                    if (startingDate.add(y, 'month').month() != startingDate.add(i, 'day').month()) {
                         y++
                     }
                     if (array.length <= y) {
                         array.push([])
                     }
 
-                    let fitting_template = slot_template.find((template: any) => template.day_number == parseInt(todayDate.add(i, 'day').format('d')))
+                    let fitting_template = slot_template.find((template: any) => template.day_number == parseInt(startingDate.add(i, 'day').format('d')))
 
                     let slots: any = []
                     if (fitting_template != undefined) {
                         fitting_template.day_detail.forEach((slot: any) => {
 
-                            const slot_availability = usefulAppointementData.find((appointement: any) => todayDate.add(i, 'day').hour(slot.split(':')[0]).minute(slot.split(':')[1]).isBetween(dayjs(appointement.appointement_date), dayjs(appointement.appointement_date).add(appointement.appointement_duration_minutes, 'minute'), 'minute', '[)')
+                            const slot_availability = usefulAppointementData.find((appointement: any) => startingDate.add(i, 'day').hour(slot.split(':')[0]).minute(slot.split(':')[1]).isBetween(dayjs(appointement.appointement_date), dayjs(appointement.appointement_date).add(appointement.appointement_duration_minutes, 'minute'), 'minute', '[)')
                             )
 
                             slots.push({ time: slot, available: !slot_availability ? true : false })
@@ -198,7 +198,7 @@ export class PlanningService implements PlanningIService {
                     }
 
                     array[y].push({
-                        date: todayDate.add(i, 'day').format('YYYY-MM-DD'),
+                        date: startingDate.add(i, 'day').format('YYYY-MM-DD'),
                         vacation: vacation_state,
                         slot_duration: fitting_template && fitting_template.slot_duration,
                         slots: !vacation_state && slots,
