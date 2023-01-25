@@ -21,7 +21,7 @@ export const mergeArrayWithoutDupes = (array1: Object[], array2: Object[]) => {
 }
 
 // export const isTheSlotAvailable = (date : string, slot : string, doctorAppointementList : any) => {
-//     let slot_time = slot.split(':')
+//     let slot_time = slot.split('-')
 //     let formattedDate = dayjs(date).hour(parseInt(slot_time[0])).minute(parseInt(slot_time[1]))
 
 //     let slot_availability = !formattedDate.isBetween(dayjs(appointement.appointement_date), dayjs(appointement.appointement_date).add(appointement.appointement_duration_minutes, 'minute'), 'minute', '[)')

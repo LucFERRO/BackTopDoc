@@ -75,7 +75,6 @@ export class PlanningService implements PlanningIService {
             while (current.add(2 * slot_duration, 'minute').isBefore(day_end)) {
                 if (current.isAfter(lunch_end) || current.add(slot_duration, 'minute').isBefore(lunch_start)) {
                     day_detail.push(current.add(slot_duration, 'minute').format('HH:MM'))
-                    console.log('New slot:',current.add(slot_duration, 'minute').format('HH:MM'))
                 }
                 current = current.add(slot_duration, 'minute')
             }
@@ -149,7 +148,6 @@ export class PlanningService implements PlanningIService {
                 appointementRawData = values[2]
 
                 const slot_template = this.createSlotsFromPlanning(planningRawData)
-                console.log(slot_template)
 
                 // Filters the vacations that will impact the upcoming %numberOfDays%
                 let usefulVacationData: any = []
@@ -200,7 +198,7 @@ export class PlanningService implements PlanningIService {
                     }
 
                     array[y].push({
-                        date: todayDate.add(i, 'day').format('YYYY:MM:DD'),
+                        date: todayDate.add(i, 'day').format('YYYY-MM-DD'),
                         vacation: vacation_state,
                         slot_duration: fitting_template && fitting_template.slot_duration,
                         slots: !vacation_state && slots,
